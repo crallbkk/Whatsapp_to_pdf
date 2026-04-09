@@ -3,3 +3,5 @@ __pycache__/
 *.pyo
 *.pdf
 .env
+*.zip
+whatsapp_export/

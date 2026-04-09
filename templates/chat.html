@@ -125,36 +125,48 @@
 
   .msg-row.sent .bubble {
     background: var(--sent-bg);
-    border-top-right-radius: 2px;
+    border-top-right-radius: 0;
   }
 
   .msg-row.received .bubble {
     background: var(--recv-bg);
-    border-top-left-radius: 2px;
+    border-top-left-radius: 0;
   }
 
-  /* Tail for sent bubble */
+  /* Tail for sent bubble — SVG polygon, reliable in Chromium print */
   .msg-row.sent .bubble::after {
     content: "";
     position: absolute;
     top: 0;
-    right: -7px;
-    width: 0;
-    height: 0;
-    border-top: 8px solid var(--sent-bg);
-    border-left: 7px solid transparent;
+    right: -8px;
+    width: 8px;
+    height: 13px;
+    background-color: transparent;
+    {% if theme == "dark" %}
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='13'%3E%3Cpolygon points='0,0 8,0 0,13' fill='%23005C4B'/%3E%3C/svg%3E");
+    {% else %}
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='13'%3E%3Cpolygon points='0,0 8,0 0,13' fill='%23DCF8C6'/%3E%3C/svg%3E");
+    {% endif %}
+    background-repeat: no-repeat;
+    background-size: 8px 13px;
   }
 
-  /* Tail for received bubble */
+  /* Tail for received bubble — SVG polygon, reliable in Chromium print */
   .msg-row.received .bubble::after {
     content: "";
     position: absolute;
     top: 0;
-    left: -7px;
-    width: 0;
-    height: 0;
-    border-top: 8px solid var(--recv-bg);
-    border-right: 7px solid transparent;
+    left: -8px;
+    width: 8px;
+    height: 13px;
+    background-color: transparent;
+    {% if theme == "dark" %}
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='13'%3E%3Cpolygon points='8,0 0,0 8,13' fill='%23202C33'/%3E%3C/svg%3E");
+    {% else %}
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='13'%3E%3Cpolygon points='8,0 0,0 8,13' fill='%23FFFFFF'/%3E%3C/svg%3E");
+    {% endif %}
+    background-repeat: no-repeat;
+    background-size: 8px 13px;
   }
 
   /* ------------------------------------------------------------------ */
@@ -230,7 +242,7 @@
 {% for msg in messages %}
 
   {# ---- Date separator ---- #}
-  {% set msg_date = msg.timestamp.strftime("%-d %B %Y") %}
+  {% set msg_date = msg.timestamp.strftime("%d %B %Y").lstrip("0") %}
   {% if msg_date != ns.last_date %}
     {% set ns.last_date = msg_date %}
     <div class="date-sep"><span>{{ msg_date }}</span></div>
@@ -272,7 +284,7 @@
 
         {# Timestamp #}
         <div class="msg-footer">
-          <span class="msg-time">{{ msg.timestamp.strftime("%-H:%M") }}</span>
+          <span class="msg-time">{{ msg.timestamp.strftime("%H:%M").lstrip("0") }}</span>
         </div>
       </div>
 

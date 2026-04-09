@@ -43,22 +43,28 @@ _ANDROID_SYS_RE = re.compile(
     r"\s-\s(.+)$"
 )
 
-# iOS: "[23/04/2021, 14:23:45] Sender: text"
+# iOS: "[23/04/2021, 14:23:45] Sender: text"  (optional leading LTR mark \u200e)
 _IOS_RE = re.compile(
-    r"^\[(\d{1,2}/\d{1,2}/\d{2,4}),\s"
+    r"^\u200e?\[(\d{1,2}/\d{1,2}/\d{2,4}),\s"
     r"(\d{1,2}:\d{2}(?::\d{2})?(?:\s?[AP]M)?)\]\s"
     r"(.+?):\s(.*)$"
 )
 
 # iOS system message
 _IOS_SYS_RE = re.compile(
-    r"^\[(\d{1,2}/\d{1,2}/\d{2,4}),\s"
+    r"^\u200e?\[(\d{1,2}/\d{1,2}/\d{2,4}),\s"
     r"(\d{1,2}:\d{2}(?::\d{2})?(?:\s?[AP]M)?)\]\s(.+)$"
 )
 
 # Media filename pattern: "IMG-20210101-WA0001.jpg (file attached)"
 _MEDIA_ATTACHED_RE = re.compile(
     r"^(.+\.(jpg|jpeg|png|gif|webp|mp4|mp3|opus|pdf|doc|docx))\s*\(file attached\)$",
+    re.IGNORECASE,
+)
+
+# iOS export format: "<attached: filename.jpg>"
+_MEDIA_ATTACHED_IOS_RE = re.compile(
+    r"^(?:.*\u200e)?\s*<attached:\s*(.+\.(jpg|jpeg|png|gif|webp|mp4|mp3|opus|pdf|doc|docx))>\s*$",
     re.IGNORECASE,
 )
 
@@ -100,12 +106,33 @@ def _parse_timestamp(date_str: str, time_str: str) -> datetime:
 
 def _detect_media(text: str) -> Optional[str]:
     """Return the media filename if the text is a media line, else None."""
-    if text.strip() == "<Media omitted>":
+    stripped = text.strip()
+    if stripped == "<Media omitted>" or stripped == "\u200e<Media omitted>":
         return "<Media omitted>"
-    m = _MEDIA_ATTACHED_RE.match(text.strip())
+    m = _MEDIA_ATTACHED_RE.match(stripped)
+    if m:
+        return m.group(1)
+    m = _MEDIA_ATTACHED_IOS_RE.match(stripped)
     if m:
         return m.group(1)
     return None
+
+
+def _strip_attached(text: str) -> tuple:
+    """
+    If text contains an <attached: ...> tag (possibly with a prefix message),
+    return (prefix_text, filename). Otherwise return (text, None).
+    """
+    # Find <attached: ...> anywhere in the text
+    pattern = re.compile(
+        r"\u200e?<attached:\s*(.+\.(jpg|jpeg|png|gif|webp|mp4|mp3|opus|pdf|doc|docx))>",
+        re.IGNORECASE,
+    )
+    m = pattern.search(text)
+    if m:
+        prefix = text[:m.start()].strip()
+        return prefix, m.group(1)
+    return text, None
 
 
 def _is_image(filename: str) -> bool:
@@ -137,10 +164,14 @@ def parse_file(path: str) -> list:
             sender = m.group(3)
             text = m.group(4)
             media = _detect_media(text)
+            if media is None:
+                text, media = _strip_attached(text)
+            else:
+                text = "" if media else text
             messages.append(Message(
                 timestamp=ts,
                 sender=sender,
-                text="" if media else text,
+                text=text,
                 media_filename=media,
             ))
             continue
@@ -150,12 +181,16 @@ def parse_file(path: str) -> list:
         if m:
             ts = _parse_timestamp(m.group(1), m.group(2))
             sender = m.group(3)
-            text = m.group(4)
+            text = m.group(4).lstrip("\u200e")
             media = _detect_media(text)
+            if media is None:
+                text, media = _strip_attached(text)
+            else:
+                text = "" if media else text
             messages.append(Message(
                 timestamp=ts,
                 sender=sender,
-                text="" if media else text,
+                text=text,
                 media_filename=media,
             ))
             continue

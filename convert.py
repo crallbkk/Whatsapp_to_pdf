@@ -71,11 +71,11 @@ def main():
 
     # --- Import here so startup is fast even if deps are missing ---
     try:
-        from weasyprint import HTML
+        from playwright.sync_api import sync_playwright
     except ImportError:
         print(
-            "Error: weasyprint is not installed.\n"
-            "Run: pip install -r requirements.txt",
+            "Error: playwright is not installed.\n"
+            "Run: pip install playwright && python -m playwright install chromium",
             file=sys.stderr,
         )
         sys.exit(1)
@@ -83,11 +83,11 @@ def main():
     from parser import parse_file
     from renderer import render_html
 
-    print(f"Parsing {input_path} …")
+    print(f"Parsing {input_path} ...")
     messages = parse_file(str(input_path))
     print(f"  {len(messages)} messages found.")
 
-    print(f"Rendering HTML ({args.theme} theme) …")
+    print(f"Rendering HTML ({args.theme} theme) ...")
     html_content = render_html(
         messages=messages,
         me=me,
@@ -95,8 +95,30 @@ def main():
         media_dir=args.media,
     )
 
-    print(f"Generating PDF → {output_path} …")
-    HTML(string=html_content, base_url=str(input_path.parent)).write_pdf(str(output_path))
+    # Write HTML to a temp file so Chromium can resolve relative paths
+    import tempfile
+    with tempfile.NamedTemporaryFile(
+        mode="w", encoding="utf-8", suffix=".html", delete=False
+    ) as tmp:
+        tmp.write(html_content)
+        tmp_path = tmp.name
+
+    print(f"Generating PDF -> {output_path} ...")
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch()
+            page = browser.new_page()
+            page.goto(f"file:///{tmp_path.replace(os.sep, '/')}")
+            page.wait_for_load_state("networkidle")
+            page.pdf(
+                path=str(output_path),
+                format="A4",
+                margin={"top": "10mm", "bottom": "10mm", "left": "8mm", "right": "8mm"},
+                print_background=True,
+            )
+            browser.close()
+    finally:
+        os.unlink(tmp_path)
 
     print(f"Done. PDF saved to: {output_path}")
 
