@@ -1,0 +1,81 @@
+"""
+Render a list of Message objects into an HTML string using the Jinja2 template,
+with optional base64-encoded image embedding for media attachments.
+"""
+
+import base64
+import os
+from pathlib import Path
+from typing import Optional
+
+from jinja2 import Environment, FileSystemLoader
+
+_TEMPLATES_DIR = Path(__file__).parent / "templates"
+
+_MIME_MAP = {
+    ".jpg":  "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png":  "image/png",
+    ".gif":  "image/gif",
+    ".webp": "image/webp",
+}
+
+_IMAGE_EXTENSIONS = set(_MIME_MAP.keys())
+
+
+def _embed_image(media_dir: Optional[str], filename: str):
+    """
+    Try to find `filename` inside `media_dir`.  If found and it is an image,
+    return (base64_string, mime_type).  Otherwise return (None, None).
+    """
+    if not media_dir or not filename or filename == "<Media omitted>":
+        return None, None
+
+    candidate = Path(media_dir) / filename
+    if not candidate.is_file():
+        # Also try searching one level deep (WhatsApp sometimes nests media)
+        matches = list(Path(media_dir).rglob(filename))
+        if not matches:
+            return None, None
+        candidate = matches[0]
+
+    ext = candidate.suffix.lower()
+    if ext not in _IMAGE_EXTENSIONS:
+        return None, None
+
+    mime = _MIME_MAP[ext]
+    with open(candidate, "rb") as fh:
+        b64 = base64.b64encode(fh.read()).decode("ascii")
+    return b64, mime
+
+
+def render_html(messages: list, me: str, theme: str = "light",
+                media_dir: Optional[str] = None) -> str:
+    """
+    Render messages to an HTML string.
+
+    Parameters
+    ----------
+    messages  : list of parser.Message objects
+    me        : display name of the user whose messages appear on the right
+    theme     : "light" or "dark"
+    media_dir : optional path to folder containing exported media files
+    """
+    env = Environment(
+        loader=FileSystemLoader(str(_TEMPLATES_DIR)),
+        autoescape=True,
+    )
+    template = env.get_template("chat.html")
+
+    # Attach base64 image data directly to message objects (temporary attrs)
+    for msg in messages:
+        if msg.media_filename and msg.media_filename != "<Media omitted>":
+            b64, mime = _embed_image(media_dir, msg.media_filename)
+            msg.media_b64 = b64
+            msg.mime_type = mime
+        else:
+            msg.media_b64 = None
+            msg.mime_type = None
+
+    html = template.render(messages=messages, me=me, theme=theme)
+    return html

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WhatsApp Chat</title>
+<style>
+  /* ------------------------------------------------------------------ */
+  /* Theme variables                                                       */
+  /* ------------------------------------------------------------------ */
+  :root {
+    {% if theme == "dark" %}
+    --bg:            #0B141A;
+    --sent-bg:       #005C4B;
+    --recv-bg:       #202C33;
+    --text:          #E9EDE9;
+    --ts-color:      #8696A0;
+    --sep-bg:        rgba(17,27,33,0.85);
+    --sep-text:      #8696A0;
+    --sep-border:    rgba(134,150,160,0.15);
+    --sender-color:  #00A884;
+    --media-bg:      #2A3942;
+    --media-text:    #8696A0;
+    {% else %}
+    --bg:            #ECE5DD;
+    --sent-bg:       #DCF8C6;
+    --recv-bg:       #FFFFFF;
+    --text:          #111111;
+    --ts-color:      #999999;
+    --sep-bg:        #E1F3FB;
+    --sep-text:      #555555;
+    --sep-border:    rgba(0,0,0,0.08);
+    --sender-color:  #075E54;
+    --media-bg:      #f0f0f0;
+    --media-text:    #666666;
+    {% endif %}
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Page / body                                                           */
+  /* ------------------------------------------------------------------ */
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: var(--bg);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    padding: 12px 8px;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Date separator                                                        */
+  /* ------------------------------------------------------------------ */
+  .date-sep {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0 8px;
+  }
+
+  .date-sep span {
+    background: var(--sep-bg);
+    color: var(--sep-text);
+    border: 1px solid var(--sep-border);
+    border-radius: 8px;
+    padding: 3px 10px;
+    font-size: 11.5px;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* System messages                                                       */
+  /* ------------------------------------------------------------------ */
+  .system-msg {
+    display: flex;
+    justify-content: center;
+    margin: 6px 0;
+  }
+
+  .system-msg span {
+    background: var(--sep-bg);
+    color: var(--sep-text);
+    border-radius: 8px;
+    padding: 3px 12px;
+    font-size: 11.5px;
+    text-align: center;
+    max-width: 75%;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Message rows                                                          */
+  /* ------------------------------------------------------------------ */
+  .msg-row {
+    display: flex;
+    margin: 2px 0;
+    width: 100%;
+  }
+
+  .msg-row.sent {
+    justify-content: flex-end;
+  }
+
+  .msg-row.received {
+    justify-content: flex-start;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Bubbles                                                               */
+  /* ------------------------------------------------------------------ */
+  .bubble {
+    position: relative;
+    max-width: 65%;
+    padding: 6px 10px 4px 10px;
+    border-radius: 8px;
+    word-wrap: break-word;
+    page-break-inside: avoid;
+  }
+
+  .msg-row.sent .bubble {
+    background: var(--sent-bg);
+    border-top-right-radius: 2px;
+  }
+
+  .msg-row.received .bubble {
+    background: var(--recv-bg);
+    border-top-left-radius: 2px;
+  }
+
+  /* Tail for sent bubble */
+  .msg-row.sent .bubble::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -7px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid var(--sent-bg);
+    border-left: 7px solid transparent;
+  }
+
+  /* Tail for received bubble */
+  .msg-row.received .bubble::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -7px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid var(--recv-bg);
+    border-right: 7px solid transparent;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Sender name (received only)                                           */
+  /* ------------------------------------------------------------------ */
+  .sender-name {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--sender-color);
+    margin-bottom: 2px;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Message text                                                          */
+  /* ------------------------------------------------------------------ */
+  .msg-text {
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Timestamp                                                             */
+  /* ------------------------------------------------------------------ */
+  .msg-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 2px;
+  }
+
+  .msg-time {
+    font-size: 10.5px;
+    color: var(--ts-color);
+    white-space: nowrap;
+    padding-left: 8px;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Media                                                                 */
+  /* ------------------------------------------------------------------ */
+  .media-img {
+    display: block;
+    max-width: 280px;
+    max-height: 280px;
+    border-radius: 6px;
+    margin-bottom: 2px;
+  }
+
+  .media-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--media-bg);
+    color: var(--media-text);
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 13px;
+    margin-bottom: 2px;
+    min-width: 120px;
+  }
+
+  .media-placeholder .icon {
+    margin-right: 6px;
+    font-size: 18px;
+  }
+</style>
+</head>
+<body>
+
+{% set ns = namespace(last_date=None) %}
+
+{% for msg in messages %}
+
+  {# ---- Date separator ---- #}
+  {% set msg_date = msg.timestamp.strftime("%-d %B %Y") %}
+  {% if msg_date != ns.last_date %}
+    {% set ns.last_date = msg_date %}
+    <div class="date-sep"><span>{{ msg_date }}</span></div>
+  {% endif %}
+
+  {# ---- System message ---- #}
+  {% if msg.is_system %}
+    <div class="system-msg"><span>{{ msg.text }}</span></div>
+
+  {# ---- Regular message ---- #}
+  {% else %}
+    {% if msg.sender == me %}
+      <div class="msg-row sent">
+    {% else %}
+      <div class="msg-row received">
+    {% endif %}
+
+      <div class="bubble">
+        {# Sender name for received messages #}
+        {% if msg.sender != me %}
+          <div class="sender-name">{{ msg.sender }}</div>
+        {% endif %}
+
+        {# Media content #}
+        {% if msg.media_filename %}
+          {% if msg.media_b64 %}
+            <img class="media-img" src="data:{{ msg.mime_type }};base64,{{ msg.media_b64 }}" alt="{{ msg.media_filename }}">
+          {% elif msg.media_filename == "<Media omitted>" %}
+            <div class="media-placeholder"><span class="icon">📎</span> Media omitted</div>
+          {% else %}
+            <div class="media-placeholder"><span class="icon">📎</span> {{ msg.media_filename }}</div>
+          {% endif %}
+        {% endif %}
+
+        {# Text content #}
+        {% if msg.text %}
+          <div class="msg-text">{{ msg.text }}</div>
+        {% endif %}
+
+        {# Timestamp #}
+        <div class="msg-footer">
+          <span class="msg-time">{{ msg.timestamp.strftime("%-H:%M") }}</span>
+        </div>
+      </div>
+
+    </div>
+  {% endif %}
+
+{% endfor %}
+
+</body>
+</html>
