@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WhatsApp PDF — Layout Preview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #f4f4f6;
+    color: #222;
+    padding: 32px;
+  }
+
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  h2 {
+    font-size: 16px;
+    margin: 32px 0 12px;
+    color: #555;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+  }
+  p.note { font-size: 13px; color: #666; margin-bottom: 16px; max-width: 720px; }
+
+  /* ----------------------------------------------------- */
+  /* iPhone frame                                          */
+  /* ----------------------------------------------------- */
+  .iphone {
+    position: relative;
+    width: 300px;
+    height: 600px;
+    background: #1a1a1a;
+    border-radius: 38px;
+    padding: 11px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    flex-shrink: 0;
+  }
+
+  .iphone-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #ECE5DD;
+    border-radius: 28px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Notch */
+  .notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 22px;
+    background: #1a1a1a;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+    z-index: 10;
+  }
+
+  /* Status bar */
+  .status-bar {
+    height: 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 22px 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: #111;
+    background: transparent;
+  }
+  .status-bar .right { display: flex; gap: 4px; align-items: center; font-size: 10px; }
+
+  /* WhatsApp header */
+  .wa-header {
+    background: #075E54;
+    color: white;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .wa-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #ccc;
+    flex-shrink: 0;
+  }
+  .wa-name { font-weight: 600; line-height: 1.1; }
+  .wa-status { font-size: 10px; opacity: 0.85; }
+
+  /* Chat area */
+  .chat-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 8px;
+    background: #ECE5DD;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' opacity='0.05'><text x='10' y='30' font-size='14' fill='%23000'>♥</text><text x='80' y='80' font-size='14' fill='%23000'>★</text><text x='150' y='40' font-size='14' fill='%23000'>♣</text><text x='40' y='130' font-size='14' fill='%23000'>♦</text><text x='110' y='160' font-size='14' fill='%23000'>♥</text></svg>");
+  }
+
+  /* Date separator */
+  .date-sep {
+    display: flex;
+    justify-content: center;
+    margin: 6px 0;
+  }
+  .date-sep span {
+    background: #E1F3FB;
+    color: #555;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 10px;
+  }
+
+  /* System banner */
+  .sys-msg {
+    display: flex;
+    justify-content: center;
+    margin: 6px 0;
+  }
+  .sys-msg span {
+    background: rgba(255,243,200,0.95);
+    color: #6a4d10;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 9.5px;
+    text-align: center;
+    max-width: 90%;
+    line-height: 1.3;
+  }
+
+  /* Bubbles */
+  .row { display: flex; margin: 2px 0; }
+  .row.sent { justify-content: flex-end; }
+  .row.received { justify-content: flex-start; }
+
+  .bubble {
+    max-width: 75%;
+    padding: 5px 8px 4px;
+    border-radius: 7px;
+    font-size: 12px;
+    line-height: 1.35;
+    position: relative;
+    box-shadow: 0 1px 0.5px rgba(0,0,0,0.06);
+  }
+  .row.sent .bubble {
+    background: #DCF8C6;
+    border-top-right-radius: 2px;
+  }
+  .row.received .bubble {
+    background: #FFFFFF;
+    border-top-left-radius: 2px;
+  }
+
+  .bubble .time {
+    font-size: 9px;
+    color: #999;
+    margin-left: 6px;
+    float: right;
+    margin-top: 4px;
+    margin-right: -2px;
+  }
+
+  /* Translation bubble (Thai) tinted slightly to indicate it's a translation */
+  .bubble.translation { font-style: normal; }
+  .bubble.translation::before {
+    content: "TH";
+    position: absolute;
+    top: -7px;
+    left: 4px;
+    background: #128C7E;
+    color: white;
+    font-size: 7px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+
+  /* ----------------------------------------------------- */
+  /* Layout options                                        */
+  /* ----------------------------------------------------- */
+
+  /* Option A — staggered cascade (user's described concept) */
+  .option-a {
+    position: relative;
+    padding: 20px 0 40px;
+    min-height: 1400px;
+  }
+  .option-a .pair {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+  .option-a .pair:nth-child(2) { margin-left: 80px; }
+  .option-a .pair:nth-child(3) { margin-left: 160px; }
+
+  /* Option B — vertical pairs */
+  .option-b .pair {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+  }
+  .option-b .label {
+    width: 60px;
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-top: 280px;
+    text-align: center;
+  }
+
+  /* Option C — single tall pair */
+  .option-c {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+  }
+  .option-c .iphone { height: 720px; }
+
+  /* Option D — translation inline (no second iPhone, translation under each msg) */
+  .option-d .iphone { height: 720px; }
+  .option-d .bubble.translation {
+    margin-top: 4px;
+    background: rgba(225, 243, 251, 0.85);
+    color: #0c5470;
+    font-size: 11px;
+    border: 1px dashed rgba(7,94,84,0.25);
+  }
+  .option-d .row.sent .bubble.translation { background: rgba(220,248,198,0.55); color: #2d4f1c; }
+
+  .caption {
+    font-size: 12px;
+    color: #888;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .legend {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: #444;
+    max-width: 720px;
+  }
+  .legend code {
+    background: #f4f4f6;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<h1>WhatsApp PDF — Translation Layout Preview</h1>
+<p class="note">
+  Throw-away page to compare layout options before wiring Thai translations into the
+  PDF generator. The same conversation is rendered in four different ways.
+  Pick the layout you like (or mix-and-match), and we'll build it for real.
+</p>
+
+<div class="legend">
+  Sample data: the first few messages from your real chat
+  ("Payandorn Suksang", May 12 2025). Thai text below is placeholder
+  — actual translations would come from a translation step before render.
+</div>
+
+<!-- =============================================================== -->
+<!-- OPTION A: Staggered cascade (your suggestion)                  -->
+<!-- =============================================================== -->
+<h2>Option A — Staggered cascade (your concept)</h2>
+<p class="note">
+  Each conversation chunk is shown in two iPhones side-by-side (English ↔ Thai).
+  Subsequent chunks step down and to the right.
+</p>
+
+<div class="option-a">
+  <!-- Pair 1 -->
+  <div class="pair">
+    <div>
+      <div class="iphone">
+        <div class="notch"></div>
+        <div class="iphone-screen">
+          <div class="status-bar"><span>9:41</span><span class="right">●●● 100%</span></div>
+          <div class="wa-header">
+            <div class="wa-avatar"></div>
+            <div><div class="wa-name">Payandorn Suksang</div><div class="wa-status">online</div></div>
+          </div>
+          <div class="chat-area">
+            <div class="date-sep"><span>12 May 2025</span></div>
+            <div class="sys-msg"><span>🔒 Messages and calls are end-to-end encrypted. Only people in this chat can read, listen to, or share them.</span></div>
+            <div class="row sent"><div class="bubble">Hi do you sell lens generators on fb marketplace? I'm looking for used machines<span class="time">6:04</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">Original</div>
+    </div>
+    <div>
+      <div class="iphone">
+        <div class="notch"></div>
+        <div class="iphone-screen">
+          <div class="status-bar"><span>9:41</span><span class="right">●●● 100%</span></div>
+          <div class="wa-header">
+            <div class="wa-avatar"></div>
+            <div><div class="wa-name">พะยอน สุขแสง</div><div class="wa-status">ออนไลน์</div></div>
+          </div>
+          <div class="chat-area">
+            <div class="date-sep"><span>12 พฤษภาคม 2025</span></div>
+            <div class="sys-msg"><span>🔒 ข้อความและการโทรได้รับการเข้ารหัสแบบครบวงจร เฉพาะผู้ที่อยู่ในแชทนี้เท่านั้นที่สามารถอ่านได้</span></div>
+            <div class="row sent"><div class="bubble">สวัสดีครับ คุณขายเครื่องเลเซอร์ในเฟซบุ๊กมาร์เก็ตเพลสไหม? ผมกำลังหาเครื่องมือสอง<span class="time">6:04</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">Thai</div>
+    </div>
+  </div>
+
+  <!-- Pair 2 -->
+  <div class="pair">
+    <div>
+      <div class="iphone">
+        <div class="notch"></div>
+        <div class="iphone-screen">
+          <div class="status-bar"><span>9:41</span><span class="right">●●● 100%</span></div>
+          <div class="wa-header">
+            <div class="wa-avatar"></div>
+            <div><div class="wa-name">Payandorn Suksang</div><div class="wa-status">online</div></div>
+          </div>
+          <div class="chat-area">
+            <div class="row received"><div class="bubble">Hi<span class="time">8:14</span></div></div>
+            <div class="row received"><div class="bubble">Yes<span class="time">8:15</span></div></div>
+            <div class="row received"><div class="bubble">Where are you form?<span class="time">8:15</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">Original</div>
+    </div>
+    <div>
+      <div class="iphone">
+        <div class="notch"></div>
+        <div class="iphone-screen">
+          <div class="status-bar"><span>9:41</span><span class="right">●●● 100%</span></div>
+          <div class="wa-header">
+            <div class="wa-avatar"></div>
+            <div><div class="wa-name">พะยอน สุขแสง</div><div class="wa-status">ออนไลน์</div></div>
+          </div>
+          <div class="chat-area">
+            <div class="row received"><div class="bubble">สวัสดี<span class="time">8:14</span></div></div>
+            <div class="row received"><div class="bubble">ใช่<span class="time">8:15</span></div></div>
+            <div class="row received"><div class="bubble">คุณมาจากที่ไหน?<span class="time">8:15</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">Thai</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- =============================================================== -->
+<!-- OPTION B: Vertical pairs, all left-aligned                     -->
+<!-- =============================================================== -->
+<h2>Option B — Aligned pairs (left-aligned, no stagger)</h2>
+<p class="note">
+  Same idea but no horizontal offset. Tidier on the page; less playful.
+</p>
+
+<div class="option-b">
+  <div class="pair">
+    <div class="label">Chunk 1</div>
+    <div>
+      <div class="iphone">
+        <div class="notch"></div>
+        <div class="iphone-screen">
+          <div class="status-bar"><span>9:41</span><span class="right">●●● 100%</span></div>
+          <div class="wa-header">
+            <div class="wa-avatar"></div>
+            <div><div class="wa-name">Payandorn Suksang</div><div class="wa-status">online</div></div>
+          </div>
+          <div class="chat-area">
+            <div class="date-sep"><span>12 May 2025</span></div>
+            <div class="sys-msg"><span>🔒 Messages and calls are end-to-end encrypted.</span></div>
+            <div class="row sent"><div class="bubble">Hi do you sell lens generators on fb marketplace? I'm looking for used machines<span class="time">6:04</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">Original</div>
+    </div>
+    <div>
+      <div class="iphone">
+        <div class="notch"></div>
+        <div class="iphone-screen">
+          <div class="status-bar"><span>9:41</span><span class="right">●●● 100%</span></div>
+          <div class="wa-header">
+            <div class="wa-avatar"></div>
+            <div><div class="wa-name">พะยอน สุขแสง</div><div class="wa-status">ออนไลน์</div></div>
+          </div>
+          <div class="chat-area">
+            <div class="date-sep"><span>12 พฤษภาคม 2025</span></div>
+            <div class="sys-msg"><span>🔒 ข้อความและการโทรได้รับการเข้ารหัสแบบครบวงจร</span></div>
+            <div class="row sent"><div class="bubble">สวัสดีครับ คุณขายเครื่องเลเซอร์ในเฟซบุ๊กมาร์เก็ตเพลสไหม? ผมกำลังหาเครื่องมือสอง<span class="time">6:04</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">Thai</div>
+    </div>
+  </div>
+
+  <div class="pair">
+    <div class="label">Chunk 2</div>
+    <div>
+      <div class="iphone">
+        <div class="notch"></div>
+        <div class="iphone-screen">
+          <div class="status-bar"><span>9:41</span><span class="right">●●● 100%</span></div>
+          <div class="wa-header">
+            <div class="wa-avatar"></div>
+            <div><div class="wa-name">Payandorn Suksang</div><div class="wa-status">online</div></div>
+          </div>
+          <div class="chat-area">
+            <div class="row received"><div class="bubble">Hi<span class="time">8:14</span></div></div>
+            <div class="row received"><div class="bubble">Yes<span class="time">8:15</span></div></div>
+            <div class="row received"><div class="bubble">Where are you form?<span class="time">8:15</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">Original</div>
+    </div>
+    <div>
+      <div class="iphone">
+        <div class="notch"></div>
+        <div class="iphone-screen">
+          <div class="status-bar"><span>9:41</span><span class="right">●●● 100%</span></div>
+          <div class="wa-header">
+            <div class="wa-avatar"></div>
+            <div><div class="wa-name">พะยอน สุขแสง</div><div class="wa-status">ออนไลน์</div></div>
+          </div>
+          <div class="chat-area">
+            <div class="row received"><div class="bubble">สวัสดี<span class="time">8:14</span></div></div>
+            <div class="row received"><div class="bubble">ใช่<span class="time">8:15</span></div></div>
+            <div class="row received"><div class="bubble">คุณมาจากที่ไหน?<span class="time">8:15</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">Thai</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- =============================================================== -->
+<!-- OPTION C: Single tall iPhone × 2                               -->
+<!-- =============================================================== -->
+<h2>Option C — One tall phone per language</h2>
+<p class="note">
+  Whole conversation in one tall iPhone, the Thai translation in another beside it.
+  Best when you want to read a chat top-to-bottom.
+</p>
+
+<div class="option-c">
+  <div>
+    <div class="iphone">
+      <div class="notch"></div>
+      <div class="iphone-screen">
+        <div class="status-bar"><span>9:41</span><span class="right">●●● 100%</span></div>
+        <div class="wa-header">
+          <div class="wa-avatar"></div>
+          <div><div class="wa-name">Payandorn Suksang</div><div class="wa-status">online</div></div>
+        </div>
+        <div class="chat-area">
+          <div class="date-sep"><span>12 May 2025</span></div>
+          <div class="sys-msg"><span>🔒 Messages and calls are end-to-end encrypted. Only people in this chat can read, listen to, or share them.</span></div>
+          <div class="row sent"><div class="bubble">Hi do you sell lens generators on fb marketplace? I'm looking for used machines<span class="time">6:04</span></div></div>
+          <div class="row received"><div class="bubble">Hi<span class="time">8:14</span></div></div>
+          <div class="row received"><div class="bubble">Yes<span class="time">8:15</span></div></div>
+          <div class="row received"><div class="bubble">Where are you form?<span class="time">8:15</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">Original</div>
+  </div>
+  <div>
+    <div class="iphone">
+      <div class="notch"></div>
+      <div class="iphone-screen">
+        <div class="status-bar"><span>9:41</span><span class="right">●●● 100%</span></div>
+        <div class="wa-header">
+          <div class="wa-avatar"></div>
+          <div><div class="wa-name">พะยอน สุขแสง</div><div class="wa-status">ออนไลน์</div></div>
+        </div>
+        <div class="chat-area">
+          <div class="date-sep"><span>12 พฤษภาคม 2025</span></div>
+          <div class="sys-msg"><span>🔒 ข้อความและการโทรได้รับการเข้ารหัสแบบครบวงจร เฉพาะผู้ที่อยู่ในแชทนี้เท่านั้นที่สามารถอ่านได้</span></div>
+          <div class="row sent"><div class="bubble">สวัสดีครับ คุณขายเครื่องเลเซอร์ในเฟซบุ๊กมาร์เก็ตเพลสไหม? ผมกำลังหาเครื่องมือสอง<span class="time">6:04</span></div></div>
+          <div class="row received"><div class="bubble">สวัสดี<span class="time">8:14</span></div></div>
+          <div class="row received"><div class="bubble">ใช่<span class="time">8:15</span></div></div>
+          <div class="row received"><div class="bubble">คุณมาจากที่ไหน?<span class="time">8:15</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">Thai</div>
+  </div>
+</div>
+
+
+<!-- =============================================================== -->
+<!-- OPTION D: Inline translation (no second phone)                 -->
+<!-- =============================================================== -->
+<h2>Option D — Inline translation (single phone, Thai under each bubble)</h2>
+<p class="note">
+  Most compact: one iPhone, with each Thai translation rendered as a smaller
+  bubble directly below its English original.
+</p>
+
+<div class="option-d">
+  <div>
+    <div class="iphone">
+      <div class="notch"></div>
+      <div class="iphone-screen">
+        <div class="status-bar"><span>9:41</span><span class="right">●●● 100%</span></div>
+        <div class="wa-header">
+          <div class="wa-avatar"></div>
+          <div><div class="wa-name">Payandorn Suksang</div><div class="wa-status">online</div></div>
+        </div>
+        <div class="chat-area">
+          <div class="date-sep"><span>12 May 2025</span></div>
+          <div class="sys-msg"><span>🔒 Messages and calls are end-to-end encrypted.</span></div>
+
+          <div class="row sent"><div class="bubble">Hi do you sell lens generators on fb marketplace? I'm looking for used machines<span class="time">6:04</span></div></div>
+          <div class="row sent"><div class="bubble translation">สวัสดีครับ คุณขายเครื่องเลเซอร์ในเฟซบุ๊กมาร์เก็ตเพลสไหม? ผมกำลังหาเครื่องมือสอง</div></div>
+
+          <div class="row received"><div class="bubble">Hi<span class="time">8:14</span></div></div>
+          <div class="row received"><div class="bubble translation">สวัสดี</div></div>
+
+          <div class="row received"><div class="bubble">Yes<span class="time">8:15</span></div></div>
+          <div class="row received"><div class="bubble translation">ใช่</div></div>
+
+          <div class="row received"><div class="bubble">Where are you form?<span class="time">8:15</span></div></div>
+          <div class="row received"><div class="bubble translation">คุณมาจากที่ไหน?</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">Inline (English + Thai under each)</div>
+  </div>
+</div>
+
+</body>
+</html>

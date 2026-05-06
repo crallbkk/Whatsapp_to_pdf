@@ -33,6 +33,14 @@ def main():
         help="Color theme for the PDF (default: light).",
     )
     parser.add_argument(
+        "--date-format",
+        choices=["auto", "dmy", "mdy"],
+        default="auto",
+        help="How to interpret ambiguous dates like 5/12/2025. "
+             "'auto' (default) detects from the file and prompts if unclear. "
+             "'dmy' treats it as 5 December; 'mdy' treats it as May 12.",
+    )
+    parser.add_argument(
         "--media",
         default=None,
         metavar="DIR",
@@ -80,11 +88,29 @@ def main():
         )
         sys.exit(1)
 
-    from parser import parse_file
+    from parser import parse_file, detect_date_format
     from renderer import render_html
 
+    # --- Resolve date format ---
+    date_format = args.date_format
+    if date_format == "auto":
+        detected = detect_date_format(str(input_path))
+        if detected == "ambiguous":
+            print(
+                "Date format is ambiguous in this export "
+                "(no day > 12 found to disambiguate)."
+            )
+            choice = input(
+                "Are dates D/M/Y (e.g. 5/12 = 5 December) "
+                "or M/D/Y (e.g. 5/12 = May 12)? [dmy/mdy] "
+            ).strip().lower()
+            date_format = "mdy" if choice.startswith("m") else "dmy"
+        else:
+            date_format = detected
+            print(f"Detected date format: {date_format.upper()}")
+
     print(f"Parsing {input_path} ...")
-    messages = parse_file(str(input_path))
+    messages = parse_file(str(input_path), date_format=date_format)
     print(f"  {len(messages)} messages found.")
 
     print(f"Rendering HTML ({args.theme} theme) ...")
