@@ -443,7 +443,12 @@ def main():
         if old in TRANSLATIONS:
             entry["thai"] = TRANSLATIONS[old]
         elif _is_already_thai(text):
-            entry["thai"] = entry["original"]
+            # Keep already-Thai messages as-is, but normalise gender particles
+            # for Payandorn so the chat reads in consistent male voice.
+            t = entry["original"]
+            if entry["sender"] == "Payandorn Suksang":
+                t = t.replace("ค่ะ", "ครับ").replace("คะ", "ครับ")
+            entry["thai"] = t
         else:
             entry["thai"] = ""
             untranslated.append((entry["id"], text[:60]))
@@ -456,6 +461,25 @@ def main():
         print(f"  {len(untranslated)} untranslated:")
         for i, t in untranslated:
             print(f"    id={i}: {t}")
+
+    # Also inline the translations into the editor HTML so the editor never
+    # serves stale data from a CDN cache.
+    editor_path = Path("design/translate_editor.html")
+    if editor_path.exists():
+        html = editor_path.read_text(encoding="utf-8")
+        inline_json = json.dumps(skel, ensure_ascii=False)
+        # Escape </script> in the JSON to keep the parser happy
+        inline_json = inline_json.replace("</script>", "<\\/script>")
+        new_html = re.sub(
+            r'(<script id="translations-data" type="application/json">)(.*?)(</script>)',
+            lambda m: m.group(1) + inline_json + m.group(3),
+            html,
+            count=1,
+            flags=re.DOTALL,
+        )
+        if new_html != html:
+            editor_path.write_text(new_html, encoding="utf-8")
+            print(f"Inlined translations into {editor_path}")
 
 
 if __name__ == "__main__":
