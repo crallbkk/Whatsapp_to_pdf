@@ -102,12 +102,13 @@ def detect_date_format(path: str) -> str:
     """
     Scan a WhatsApp export and return 'dmy', 'mdy', or 'ambiguous'.
 
-    Looks at every parsed timestamp line. If any first-position number > 12
-    we know the format is M/D, otherwise D/M. If both signals appear something
-    is wrong; we report ambiguous.
+    Looks at every parsed timestamp line. If any first-position number > 12,
+    it can't be a month — format must be D/M. If any second-position number > 12,
+    that slot must be the day — format must be M/D. If both signals appear
+    something is wrong; we report ambiguous.
     """
-    saw_dmy = False  # second slot > 12 → must be DMY
-    saw_mdy = False  # first slot > 12 → must be MDY
+    saw_dmy = False  # first slot > 12 → first slot is the day → DMY
+    saw_mdy = False  # second slot > 12 → second slot is the day → MDY
 
     with open(path, "r", encoding="utf-8", errors="replace") as fh:
         for raw_line in fh:
@@ -119,9 +120,9 @@ def detect_date_format(path: str) -> str:
                     if parts:
                         a, b, _ = parts
                         if a > 12:
-                            saw_mdy = True
-                        if b > 12:
                             saw_dmy = True
+                        if b > 12:
+                            saw_mdy = True
                     break
 
     if saw_dmy and not saw_mdy:
@@ -271,11 +272,15 @@ def parse_file(path: str, date_format: str = "dmy") -> list:
         # Try Android system message
         m = _ANDROID_SYS_RE.match(line)
         if m:
+            text = m.group(3).strip()
+            # Skip empty "Sender:" placeholder lines (appear before media bursts)
+            if re.match(r"^[A-Za-z][\w\s]*:$", text):
+                continue
             ts = _parse_timestamp(m.group(1), m.group(2), date_format)
             messages.append(Message(
                 timestamp=ts,
                 sender="",
-                text=m.group(3),
+                text=text,
                 is_system=True,
             ))
             continue
@@ -283,11 +288,14 @@ def parse_file(path: str, date_format: str = "dmy") -> list:
         # Try iOS system message
         m = _IOS_SYS_RE.match(line)
         if m:
+            text = m.group(3).strip()
+            if re.match(r"^[A-Za-z][\w\s]*:$", text):
+                continue
             ts = _parse_timestamp(m.group(1), m.group(2), date_format)
             messages.append(Message(
                 timestamp=ts,
                 sender="",
-                text=m.group(3),
+                text=text,
                 is_system=True,
             ))
             continue

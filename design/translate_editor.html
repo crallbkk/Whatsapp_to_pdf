@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WhatsApp Chat — Thai Translation Editor</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #f4f4f6;
+    --panel:     #ffffff;
+    --border:    #e1e1e6;
+    --text:      #1c1c1f;
+    --muted:     #888;
+    --accent:    #075E54;
+    --sent-bg:   #DCF8C6;
+    --recv-bg:   #FFFFFF;
+    --sys-bg:    #fff8d6;
+    --sys-text:  #6a4d10;
+    --tr-bg:     #E1F3FB;
+    --tr-text:   #0c5470;
+    --warn:      #c0392b;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Sukhumvit Set",
+                 Tahoma, Arial, sans-serif;
+    font-size: 14px;
+    height: 100%;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Top bar                                                              */
+  /* ------------------------------------------------------------------ */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .topbar h1 { font-size: 16px; font-weight: 600; }
+  .topbar .info { color: var(--muted); font-size: 13px; }
+  .topbar .grow { flex: 1; }
+
+  button {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { background: #064e44; }
+  button.secondary {
+    background: white;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  button.secondary:hover { background: #f0f0f3; }
+  button.danger { background: var(--warn); }
+  button.danger:hover { background: #962d22; }
+
+  .status-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #2c3e50;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    z-index: 200;
+  }
+  .status-toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ------------------------------------------------------------------ */
+  /* Layout: scrolling list of message rows                              */
+  /* ------------------------------------------------------------------ */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 20px 80px;
+  }
+
+  .date-sep {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0 8px;
+  }
+  .date-sep span {
+    background: var(--tr-bg);
+    color: #555;
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+    align-items: start;
+    margin: 6px 0;
+  }
+  .row.system .col { grid-column: 1 / -1; }
+  .row.system .bubble-wrap { justify-content: center !important; }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+  }
+  .meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 2px;
+    padding: 0 4px;
+  }
+  .meta .id-tag {
+    background: rgba(0,0,0,0.05);
+    border-radius: 3px;
+    padding: 0 4px;
+    font-family: ui-monospace, monospace;
+    margin-right: 6px;
+  }
+
+  .bubble-wrap { display: flex; }
+  .bubble-wrap.sent { justify-content: flex-end; }
+  .bubble-wrap.received { justify-content: flex-start; }
+
+  .bubble {
+    max-width: 85%;
+    background: var(--recv-bg);
+    border: 1px solid var(--border);
+    padding: 8px 12px 6px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .bubble.sent { background: var(--sent-bg); border-color: #c8e8a8; border-top-right-radius: 2px; }
+  .bubble.received { background: var(--recv-bg); border-top-left-radius: 2px; }
+  .bubble.system {
+    background: var(--sys-bg);
+    color: var(--sys-text);
+    border-color: rgba(106,77,16,0.2);
+    text-align: center;
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  .bubble .time {
+    font-size: 10px;
+    color: var(--muted);
+    margin-left: 8px;
+    float: right;
+    margin-top: 4px;
+  }
+  .bubble .media-tag {
+    display: inline-block;
+    background: rgba(0,0,0,0.05);
+    border: 1px dashed rgba(0,0,0,0.15);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 4px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* Editable Thai bubble */
+  textarea.thai-input {
+    width: 100%;
+    max-width: 85%;
+    align-self: flex-end;
+    background: var(--recv-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.4;
+    resize: vertical;
+    min-height: 38px;
+  }
+  .bubble-wrap.sent textarea.thai-input {
+    background: var(--sent-bg);
+    border-color: #c8e8a8;
+    align-self: flex-end;
+  }
+  .row.system textarea.thai-input {
+    background: var(--sys-bg);
+    color: var(--sys-text);
+    border-color: rgba(106,77,16,0.2);
+    text-align: center;
+    align-self: center;
+    max-width: 60%;
+  }
+  textarea.thai-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(7,94,84,0.15);
+  }
+  textarea.thai-input.dirty { border-left: 3px solid #f39c12; }
+
+  .empty {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  /* Loading / error */
+  .loading {
+    text-align: center;
+    color: var(--muted);
+    padding: 60px 20px;
+  }
+  .error {
+    background: #fee;
+    color: #900;
+    padding: 12px 16px;
+    border: 1px solid #fcc;
+    border-radius: 6px;
+    margin: 20px 0;
+  }
+
+  /* Header guides */
+  .columns-header {
+    position: sticky;
+    top: 49px;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+    background: var(--bg);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .columns-header > div { padding: 0 8px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Thai Translation Editor</h1>
+  <span class="info" id="status-info">Loading…</span>
+  <span class="grow"></span>
+  <button class="secondary" id="btn-revert" title="Reload from translations.json — discards unsaved edits">Revert</button>
+  <button class="secondary" id="btn-copy">Copy JSON</button>
+  <button id="btn-download">Download JSON</button>
+</div>
+
+<main id="app">
+  <div class="loading">Loading translations.json …</div>
+</main>
+
+<div class="status-toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = "wa_translations_draft_v1";
+const STORAGE_DRAFT_MAP = "wa_translations_draft_map_v1";
+
+let originalData = null;   // pristine from translations.json
+let edits = {};            // id -> edited thai (only diffs from original)
+
+function showToast(msg, ms=1800) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove("show"), ms);
+}
+
+function fmtDateLabel(iso) {
+  const d = new Date(iso);
+  const months = ["January","February","March","April","May","June",
+                  "July","August","September","October","November","December"];
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+function fmtTime(iso) {
+  const d = new Date(iso);
+  const h = d.getHours();
+  const m = d.getMinutes().toString().padStart(2,'0');
+  return `${h}:${m}`;
+}
+
+function direction(entry, me) {
+  if (entry.is_system) return "system";
+  if (!entry.sender) return "system";
+  return entry.sender === me ? "sent" : "received";
+}
+
+function saveDraft() {
+  localStorage.setItem(STORAGE_DRAFT_MAP, JSON.stringify(edits));
+}
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(STORAGE_DRAFT_MAP);
+    return raw ? JSON.parse(raw) : {};
+  } catch { return {}; }
+}
+
+function applyEditsToData() {
+  const merged = JSON.parse(JSON.stringify(originalData));
+  for (const e of merged) {
+    if (edits.hasOwnProperty(e.id)) e.thai = edits[e.id];
+  }
+  return merged;
+}
+
+function jsonString() {
+  return JSON.stringify(applyEditsToData(), null, 2);
+}
+
+function dirtyCount() {
+  // Count edits that actually differ from original
+  let n = 0;
+  for (const e of originalData) {
+    if (edits.hasOwnProperty(e.id) && edits[e.id] !== e.thai) n++;
+  }
+  return n;
+}
+
+function updateStatus() {
+  const total = originalData.length;
+  const withText = originalData.filter(e => e.original.trim()).length;
+  const dirty = dirtyCount();
+  const txt = `${total} entries  ·  ${withText} with text  ·  ${dirty} edited`;
+  document.getElementById("status-info").textContent = txt;
+}
+
+function render(me) {
+  const app = document.getElementById("app");
+  app.innerHTML = "";
+
+  const headerEl = document.createElement("div");
+  headerEl.className = "columns-header";
+  headerEl.innerHTML = `<div>English (original)</div><div>ไทย — editable</div>`;
+  app.appendChild(headerEl);
+
+  let lastDate = null;
+  for (const entry of originalData) {
+    const dateLabel = fmtDateLabel(entry.timestamp);
+    if (dateLabel !== lastDate) {
+      lastDate = dateLabel;
+      const sep = document.createElement("div");
+      sep.className = "date-sep";
+      sep.innerHTML = `<span>${dateLabel}</span>`;
+      app.appendChild(sep);
+    }
+
+    const dir = direction(entry, me);
+    const row = document.createElement("div");
+    row.className = `row ${dir}`;
+
+    // Left column: English original
+    const leftCol = document.createElement("div");
+    leftCol.className = "col";
+    const leftMeta = document.createElement("div");
+    leftMeta.className = "meta";
+    leftMeta.innerHTML = `<span class="id-tag">#${entry.id}</span>`
+                       + `${entry.sender || "system"} · ${fmtTime(entry.timestamp)}`;
+    leftCol.appendChild(leftMeta);
+
+    const leftWrap = document.createElement("div");
+    leftWrap.className = `bubble-wrap ${dir}`;
+    const leftBubble = document.createElement("div");
+    leftBubble.className = `bubble ${dir}`;
+    if (!entry.original && entry.media_filename) {
+      leftBubble.innerHTML = `<span class="media-tag">📎 ${entry.media_filename}</span>`;
+    } else if (!entry.original) {
+      leftBubble.classList.add("empty");
+      leftBubble.textContent = "(empty)";
+    } else {
+      leftBubble.textContent = entry.original;
+      if (entry.media_filename) {
+        const t = document.createElement("span");
+        t.className = "media-tag";
+        t.textContent = "📎 " + entry.media_filename;
+        leftBubble.prepend(t, " ");
+      }
+    }
+    leftWrap.appendChild(leftBubble);
+    leftCol.appendChild(leftWrap);
+    row.appendChild(leftCol);
+
+    // Right column: editable Thai
+    const rightCol = document.createElement("div");
+    rightCol.className = "col";
+    const rightMeta = document.createElement("div");
+    rightMeta.className = "meta";
+    rightMeta.textContent = " ";
+    rightCol.appendChild(rightMeta);
+
+    const rightWrap = document.createElement("div");
+    rightWrap.className = `bubble-wrap ${dir}`;
+    if (!entry.original.trim()) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = entry.media_filename ? "(media — no translation needed)" : "(no text)";
+      rightWrap.appendChild(empty);
+    } else {
+      const ta = document.createElement("textarea");
+      ta.className = "thai-input";
+      ta.dataset.id = entry.id;
+      const currentValue = edits.hasOwnProperty(entry.id) ? edits[entry.id] : entry.thai;
+      ta.value = currentValue;
+      if (currentValue !== entry.thai) ta.classList.add("dirty");
+      autoSize(ta);
+      ta.addEventListener("input", () => {
+        edits[entry.id] = ta.value;
+        if (ta.value !== entry.thai) ta.classList.add("dirty");
+        else ta.classList.remove("dirty");
+        autoSize(ta);
+        saveDraft();
+        updateStatus();
+      });
+      rightWrap.appendChild(ta);
+    }
+    rightCol.appendChild(rightWrap);
+    row.appendChild(rightCol);
+
+    app.appendChild(row);
+  }
+
+  updateStatus();
+}
+
+function autoSize(ta) {
+  ta.style.height = "auto";
+  ta.style.height = (ta.scrollHeight + 2) + "px";
+}
+
+async function init() {
+  // Try fetching translations.json from same dir, then ../
+  const candidates = ["./translations.json", "../translations.json"];
+  let data = null, lastErr = null;
+  for (const url of candidates) {
+    try {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
+      data = await r.json();
+      break;
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+  if (!data) {
+    document.getElementById("app").innerHTML =
+      `<div class="error"><b>Could not load translations.json.</b><br>` +
+      `Tried: ${candidates.join(", ")}<br>${lastErr}</div>`;
+    return;
+  }
+
+  originalData = data;
+  edits = loadDraft();
+
+  // Determine "me" — prefer Chris Rall (the user); fall back to most-frequent sender
+  // Actually use the sender that appears in messages without is_system.
+  const senders = {};
+  for (const e of data) {
+    if (e.sender) senders[e.sender] = (senders[e.sender] || 0) + 1;
+  }
+  // The user's name in this chat is hard-coded for the editor (it's their chat).
+  let me = "Chris Rall";
+  if (!senders[me]) {
+    me = Object.entries(senders).sort((a,b) => b[1]-a[1])[0]?.[0] || "";
+  }
+
+  render(me);
+}
+
+document.getElementById("btn-download").addEventListener("click", () => {
+  const blob = new Blob([jsonString()], {type: "application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "translations.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  showToast("Downloaded translations.json");
+});
+
+document.getElementById("btn-copy").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(jsonString());
+    showToast("Copied JSON to clipboard");
+  } catch (e) {
+    showToast("Copy failed — use Download instead");
+  }
+});
+
+document.getElementById("btn-revert").addEventListener("click", () => {
+  if (!confirm("Discard all unsaved edits and reload from translations.json?")) return;
+  edits = {};
+  localStorage.removeItem(STORAGE_DRAFT_MAP);
+  init();
+});
+
+init();
+</script>
+</body>
+</html>
