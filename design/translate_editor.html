@@ -453,11 +453,13 @@ function autoSize(ta) {
 
 async function init() {
   // Try fetching translations.json from same dir, then ../
+  // Bust caches with a timestamp query so raw.githack edits propagate immediately
+  const bust = "?t=" + Date.now();
   const candidates = ["./translations.json", "../translations.json"];
   let data = null, lastErr = null;
   for (const url of candidates) {
     try {
-      const r = await fetch(url);
+      const r = await fetch(url + bust, {cache: "no-store"});
       if (!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
       data = await r.json();
       break;
