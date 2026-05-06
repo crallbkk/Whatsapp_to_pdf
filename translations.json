@@ -24,7 +24,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Hi",
-    "thai": "สวัสดีค่ะ"
+    "thai": "สวัสดีครับ"
   },
   {
     "id": 3,
@@ -33,7 +33,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Yes",
-    "thai": "ใช่ค่ะ"
+    "thai": "ใช่ครับ"
   },
   {
     "id": 4,
@@ -42,7 +42,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Where are you form?",
-    "thai": "คุณอยู่ที่ไหนคะ"
+    "thai": "คุณอยู่ที่ไหนครับ"
   },
   {
     "id": 5,
@@ -51,7 +51,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "What are you looking for ?",
-    "thai": "คุณกำลังหาอะไรอยู่คะ"
+    "thai": "คุณกำลังหาอะไรอยู่ครับ"
   },
   {
     "id": 6,
@@ -69,7 +69,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Nice to meet you.",
-    "thai": "ยินดีที่ได้รู้จักค่ะ"
+    "thai": "ยินดีที่ได้รู้จักครับ"
   },
   {
     "id": 8,
@@ -87,7 +87,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Yes. Thailand",
-    "thai": "ใช่ค่ะ ประเทศไทย"
+    "thai": "ใช่ครับ ประเทศไทย"
   },
   {
     "id": 10,
@@ -105,7 +105,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Your welcome",
-    "thai": "ยินดีค่ะ"
+    "thai": "ยินดีครับ"
   },
   {
     "id": 12,
@@ -114,7 +114,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Are you interested Freeform Rx Lab Lens ?",
-    "thai": "คุณสนใจเลนส์ Freeform Rx Lab ไหมคะ"
+    "thai": "คุณสนใจเลนส์ Freeform Rx Lab ไหมครับ"
   },
   {
     "id": 13,
@@ -141,7 +141,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I have it available in Thailand.",
-    "thai": "มีในประเทศไทยค่ะ"
+    "thai": "มีในประเทศไทยครับ"
   },
   {
     "id": 16,
@@ -168,7 +168,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Are you start small capacity right?",
-    "thai": "คุณเริ่มจากกำลังการผลิตน้อยใช่ไหมคะ"
+    "thai": "คุณเริ่มจากกำลังการผลิตน้อยใช่ไหมครับ"
   },
   {
     "id": 19,
@@ -195,7 +195,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "What about your working period a day?",
-    "thai": "แล้วระยะเวลาทำงานต่อวันของคุณล่ะคะ"
+    "thai": "แล้วระยะเวลาทำงานต่อวันของคุณล่ะครับ"
   },
   {
     "id": 22,
@@ -213,7 +213,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "How many capacity a day you plan to do it ?",
-    "thai": "วางแผนกำลังการผลิตต่อวันเท่าไหร่คะ"
+    "thai": "วางแผนกำลังการผลิตต่อวันเท่าไหร่ครับ"
   },
   {
     "id": 24,
@@ -240,7 +240,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "1000 pairs is big volume a day more investment.",
-    "thai": "1,000 คู่ต่อวันเป็นปริมาณมาก ต้องลงทุนเพิ่มค่ะ"
+    "thai": "1,000 คู่ต่อวันเป็นปริมาณมาก ต้องลงทุนเพิ่มครับ"
   },
   {
     "id": 27,
@@ -267,7 +267,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "If you're need it  1000 pairs a day 24 hrs is can do it on freeform lens.",
-    "thai": "ถ้าคุณต้องการ 1,000 คู่ต่อวันใน 24 ชม. ทำได้ค่ะ ใช้เลนส์ฟรีฟอร์ม"
+    "thai": "ถ้าคุณต้องการ 1,000 คู่ต่อวันใน 24 ชม. ทำได้ครับ ใช้เลนส์ฟรีฟอร์ม"
   },
   {
     "id": 30,
@@ -276,7 +276,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I can arrange for you machine for Rx Lab Lens.",
-    "thai": "ดิฉันจัดหาเครื่อง Rx Lab Lens ให้ได้ค่ะ"
+    "thai": "ผมจัดหาเครื่อง Rx Lab Lens ให้ได้ครับ"
   },
   {
     "id": 31,
@@ -285,7 +285,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Where are you need to production?",
-    "thai": "คุณจะตั้งโรงงานผลิตที่ไหนคะ"
+    "thai": "คุณจะตั้งโรงงานผลิตที่ไหนครับ"
   },
   {
     "id": 32,
@@ -312,7 +312,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I have  Satisloh, Schneider, Optotech.",
-    "thai": "มี Satisloh, Schneider, Optotech ค่ะ"
+    "thai": "มี Satisloh, Schneider, Optotech ครับ"
   },
   {
     "id": 35,
@@ -330,7 +330,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Are you interested investment in Thailand?",
-    "thai": "คุณสนใจลงทุนในประเทศไทยใช่ไหมคะ"
+    "thai": "คุณสนใจลงทุนในประเทศไทยใช่ไหมครับ"
   },
   {
     "id": 37,
@@ -339,7 +339,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Start form used machine?",
-    "thai": "เริ่มจากเครื่องมือสองใช่ไหมคะ"
+    "thai": "เริ่มจากเครื่องมือสองใช่ไหมครับ"
   },
   {
     "id": 38,
@@ -366,7 +366,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Location in Thailand?",
-    "thai": "ที่ตั้งในประเทศไทยที่ไหนคะ"
+    "thai": "ที่ตั้งในประเทศไทยที่ไหนครับ"
   },
   {
     "id": 41,
@@ -384,7 +384,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "O.K. I will arrange for your plan in Thailand.",
-    "thai": "โอเคค่ะ ดิฉันจะจัดเตรียมแผนในประเทศไทยให้"
+    "thai": "โอเคครับ ผมจะจัดเตรียมแผนในประเทศไทยให้"
   },
   {
     "id": 43,
@@ -393,7 +393,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Factory for your plants in Thailand too.?",
-    "thai": "โรงงานสำหรับธุรกิจของคุณก็อยู่ในประเทศไทยใช่ไหมคะ"
+    "thai": "โรงงานสำหรับธุรกิจของคุณก็อยู่ในประเทศไทยใช่ไหมครับ"
   },
   {
     "id": 44,
@@ -402,7 +402,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Not only machinery is correct.",
-    "thai": "ไม่ใช่แค่เครื่องจักรอย่างเดียวใช่ไหมคะ"
+    "thai": "ไม่ใช่แค่เครื่องจักรอย่างเดียวใช่ไหมครับ"
   },
   {
     "id": 45,
@@ -438,7 +438,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Your welcome",
-    "thai": "ยินดีค่ะ"
+    "thai": "ยินดีครับ"
   },
   {
     "id": 49,
@@ -483,7 +483,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Yes.I will inform you asap.",
-    "thai": "ค่ะ จะแจ้งให้ทราบโดยเร็วที่สุด"
+    "thai": "ครับ จะแจ้งให้ทราบโดยเร็วที่สุด"
   },
   {
     "id": 54,
@@ -492,7 +492,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I'm waiting for Refurbished price on it.",
-    "thai": "ดิฉันรอราคา Refurbished อยู่ค่ะ"
+    "thai": "ผมรอราคา Refurbished อยู่ครับ"
   },
   {
     "id": 55,
@@ -537,7 +537,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "How many machine are you need it?",
-    "thai": "คุณต้องการกี่เครื่องคะ"
+    "thai": "คุณต้องการกี่เครื่องครับ"
   },
   {
     "id": 60,
@@ -564,7 +564,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Yes.",
-    "thai": "ใช่ค่ะ"
+    "thai": "ใช่ครับ"
   },
   {
     "id": 63,
@@ -582,7 +582,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I take it form Hoya.",
-    "thai": "ดิฉันรับมาจาก Hoya ค่ะ"
+    "thai": "ผมรับมาจาก Hoya ครับ"
   },
   {
     "id": 65,
@@ -618,7 +618,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Yes.they are blanks production in Thailand also surfacing and edging to export.",
-    "thai": "ใช่ค่ะ พวกเขาผลิต blank ในประเทศไทยด้วย ทั้ง surfacing และ edging เพื่อส่งออก"
+    "thai": "ใช่ครับ พวกเขาผลิต blank ในประเทศไทยด้วย ทั้ง surfacing และ edging เพื่อส่งออก"
   },
   {
     "id": 69,
@@ -627,7 +627,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "They're established to Philippines for Rx Lab production capacity 10000 pairs per day.",
-    "thai": "พวกเขาตั้งโรงงานที่ฟิลิปปินส์ผลิต Rx Lab กำลังผลิต 10,000 คู่ต่อวันค่ะ"
+    "thai": "พวกเขาตั้งโรงงานที่ฟิลิปปินส์ผลิต Rx Lab กำลังผลิต 10,000 คู่ต่อวันครับ"
   },
   {
     "id": 70,
@@ -663,7 +663,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Yes.",
-    "thai": "ใช่ค่ะ"
+    "thai": "ใช่ครับ"
   },
   {
     "id": 74,
@@ -690,7 +690,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Yes.",
-    "thai": "ได้ค่ะ"
+    "thai": "ได้ครับ"
   },
   {
     "id": 77,
@@ -699,7 +699,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "In Thailand.",
-    "thai": "ในประเทศไทยค่ะ"
+    "thai": "ในประเทศไทยครับ"
   },
   {
     "id": 78,
@@ -726,7 +726,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Ayuthaya",
-    "thai": "อยุธยาค่ะ"
+    "thai": "อยุธยาครับ"
   },
   {
     "id": 81,
@@ -735,7 +735,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I take it out form Hoya. I waiting  Nidek engineer repair my office at Ayuthaya.",
-    "thai": "รับมาจาก Hoya ค่ะ ดิฉันรอวิศวกร Nidek มาซ่อมที่ออฟฟิศที่อยุธยา"
+    "thai": "รับมาจาก Hoya ครับ ผมรอวิศวกร Nidek มาซ่อมที่ออฟฟิศที่อยุธยา"
   },
   {
     "id": 82,
@@ -753,7 +753,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Yes.",
-    "thai": "ได้ค่ะ"
+    "thai": "ได้ครับ"
   },
   {
     "id": 84,
@@ -762,7 +762,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "You come to see it before is the best way.",
-    "thai": "มาดูก่อนเป็นวิธีที่ดีที่สุดค่ะ"
+    "thai": "มาดูก่อนเป็นวิธีที่ดีที่สุดครับ"
   },
   {
     "id": 85,
@@ -780,7 +780,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "No problem",
-    "thai": "ไม่มีปัญหาค่ะ"
+    "thai": "ไม่มีปัญหาครับ"
   },
   {
     "id": 87,
@@ -789,7 +789,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Your welcome",
-    "thai": "ยินดีค่ะ"
+    "thai": "ยินดีครับ"
   },
   {
     "id": 88,
@@ -807,7 +807,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Yes. What time  you available there ?",
-    "thai": "ได้ค่ะ คุณว่างที่นั่นกี่โมงคะ"
+    "thai": "ได้ครับ คุณว่างที่นั่นกี่โมงครับ"
   },
   {
     "id": 90,
@@ -879,7 +879,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Hi",
-    "thai": "สวัสดีค่ะ"
+    "thai": "สวัสดีครับ"
   },
   {
     "id": 98,
@@ -888,7 +888,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Let's me know you start on the road .",
-    "thai": "ออกเดินทางแล้วบอกด้วยนะคะ"
+    "thai": "ออกเดินทางแล้วบอกด้วยนะครับ"
   },
   {
     "id": 99,
@@ -897,7 +897,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Are you form Asoke right ?",
-    "thai": "คุณมาจากอโศกใช่ไหมคะ"
+    "thai": "คุณมาจากอโศกใช่ไหมครับ"
   },
   {
     "id": 100,
@@ -915,7 +915,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "O.K.  with thanks",
-    "thai": "โอเคค่ะ ขอบคุณค่ะ"
+    "thai": "โอเคครับ ขอบคุณครับ"
   },
   {
     "id": 102,
@@ -987,7 +987,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Hi",
-    "thai": "สวัสดีค่ะ"
+    "thai": "สวัสดีครับ"
   },
   {
     "id": 110,
@@ -996,7 +996,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "How are you?",
-    "thai": "เป็นยังไงบ้างคะ"
+    "thai": "เป็นยังไงบ้างครับ"
   },
   {
     "id": 111,
@@ -1014,7 +1014,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I'm waiting to confirm Blocker let's you know on Tuesday.",
-    "thai": "รอยืนยัน Blocker อยู่ค่ะ จะแจ้งให้ทราบวันอังคาร"
+    "thai": "รอยืนยัน Blocker อยู่ครับ จะแจ้งให้ทราบวันอังคาร"
   },
   {
     "id": 113,
@@ -1041,7 +1041,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Wait please",
-    "thai": "รอสักครู่ค่ะ"
+    "thai": "รอสักครู่ครับ"
   },
   {
     "id": 116,
@@ -1050,7 +1050,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I'm recommend you use \nWeco Tracer II\nWeco Blocker cad II\nWeco 430 Edger \nAre you interested?\nI'm discuss with my client.",
-    "thai": "ดิฉันแนะนำให้ใช้\nWeco Tracer II\nWeco Blocker cad II\nWeco 430 Edger\nคุณสนใจไหมคะ\nดิฉันกำลังคุยกับลูกค้าของดิฉัน"
+    "thai": "ผมแนะนำให้ใช้\nWeco Tracer II\nWeco Blocker cad II\nWeco 430 Edger\nคุณสนใจไหมครับ\nผมกำลังคุยกับลูกค้าของผม"
   },
   {
     "id": 117,
@@ -1086,7 +1086,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Complete sets price$4950",
-    "thai": "ครบชุดราคา $4,950 ค่ะ"
+    "thai": "ครบชุดราคา $4,950 ครับ"
   },
   {
     "id": 121,
@@ -1104,7 +1104,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Optical Technology Store Co., Ltd. will take care of it for you.",
-    "thai": "Optical Technology Store Co., Ltd. จะดูแลให้คุณค่ะ"
+    "thai": "Optical Technology Store Co., Ltd. จะดูแลให้คุณครับ"
   },
   {
     "id": 123,
@@ -1149,7 +1149,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "You pay as 50%of $4950 the priority payments Refurbished and tank and   pump circulation for coolant $1200 pay after complete within 45 days at Optical Technology Store Co Ltd. Machines is 90 days warranty.",
-    "thai": "คุณจ่าย 50% ของ $4,950 เป็นเงินมัดจำให้ทำ Refurbished ก่อน และค่าถัง+ปั๊มหมุนเวียนน้ำหล่อเย็น $1,200 จ่ายหลัง refurbished เสร็จภายใน 45 วันที่ Optical Technology Store Co Ltd. เครื่องรับประกัน 90 วันค่ะ"
+    "thai": "คุณจ่าย 50% ของ $4,950 เป็นเงินมัดจำให้ทำ Refurbished ก่อน และค่าถัง+ปั๊มหมุนเวียนน้ำหล่อเย็น $1,200 จ่ายหลัง refurbished เสร็จภายใน 45 วันที่ Optical Technology Store Co Ltd. เครื่องรับประกัน 90 วันครับ"
   },
   {
     "id": 128,
@@ -1167,7 +1167,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I mean you pay total $4950+$1200 =$6150\nFirst priority pay 50%$4950 \nThey will \"Machine Refurbished\" \nAfter that you get machine within 45 days you pay agian $3675 machines will arrive with pump and tank.",
-    "thai": "หมายถึงคุณจ่ายรวม $4,950+$1,200 = $6,150 ค่ะ\nงวดแรกจ่าย 50% = $4,950\nพวกเขาจะ \"Machine Refurbished\"\nหลังจากนั้นคุณจะได้รับเครื่องภายใน 45 วัน คุณจ่ายอีก $3,675 เครื่องจะมาพร้อมปั๊มและถัง"
+    "thai": "หมายถึงคุณจ่ายรวม $4,950+$1,200 = $6,150 ครับ\nงวดแรกจ่าย 50% = $4,950\nพวกเขาจะ \"Machine Refurbished\"\nหลังจากนั้นคุณจะได้รับเครื่องภายใน 45 วัน คุณจ่ายอีก $3,675 เครื่องจะมาพร้อมปั๊มและถัง"
   },
   {
     "id": 130,
@@ -1185,7 +1185,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Are you confirm order ?",
-    "thai": "ยืนยันคำสั่งซื้อใช่ไหมคะ"
+    "thai": "ยืนยันคำสั่งซื้อใช่ไหมครับ"
   },
   {
     "id": 132,
@@ -1203,7 +1203,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I will inform you Optical Technology Store Co Ltd.  account number \nBank Name \n50% Deposit Payment",
-    "thai": "ดิฉันจะแจ้งเลขบัญชี Optical Technology Store Co Ltd. ให้\nชื่อธนาคาร\nงวดมัดจำ 50%"
+    "thai": "ผมจะแจ้งเลขบัญชี Optical Technology Store Co Ltd. ให้\nชื่อธนาคาร\nงวดมัดจำ 50%"
   },
   {
     "id": 134,
@@ -1221,7 +1221,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "No ploblem.",
-    "thai": "ไม่มีปัญหาค่ะ"
+    "thai": "ไม่มีปัญหาครับ"
   },
   {
     "id": 136,
@@ -1230,7 +1230,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I need your are address for PFI.",
-    "thai": "ขอที่อยู่สำหรับ PFI หน่อยค่ะ"
+    "thai": "ขอที่อยู่สำหรับ PFI หน่อยครับ"
   },
   {
     "id": 137,
@@ -1248,7 +1248,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Are you need  Thai ID or Passport ?",
-    "thai": "ใช้บัตรประชาชนไทยหรือพาสปอร์ตคะ"
+    "thai": "ใช้บัตรประชาชนไทยหรือพาสปอร์ตครับ"
   },
   {
     "id": 139,
@@ -1266,7 +1266,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "O.K.",
-    "thai": "โอเคค่ะ"
+    "thai": "โอเคครับ"
   },
   {
     "id": 141,
@@ -1284,7 +1284,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "After deposit payment  within 45 days.",
-    "thai": "หลังจ่ายมัดจำภายใน 45 วันค่ะ"
+    "thai": "หลังจ่ายมัดจำภายใน 45 วันครับ"
   },
   {
     "id": 143,
@@ -1302,7 +1302,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "The invoice after machine delivery. But Id.card or passport immedietly give you.",
-    "thai": "ใบแจ้งหนี้หลังเครื่องส่งมอบค่ะ แต่บัตรประชาชนหรือพาสปอร์ตจะให้ทันที"
+    "thai": "ใบแจ้งหนี้หลังเครื่องส่งมอบครับ แต่บัตรประชาชนหรือพาสปอร์ตจะให้ทันที"
   },
   {
     "id": 145,
@@ -1311,7 +1311,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I will give you on Friday.",
-    "thai": "ดิฉันจะให้คุณวันศุกร์ค่ะ"
+    "thai": "ผมจะให้คุณวันศุกร์ครับ"
   },
   {
     "id": 146,
@@ -1392,7 +1392,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "After you tranfer .lets me know .I will give you reciep of amount you partial payment.",
-    "thai": "หลังโอนแจ้งให้ทราบด้วยนะคะ ดิฉันจะส่งใบเสร็จสำหรับเงินที่ชำระบางส่วนให้ค่ะ"
+    "thai": "หลังโอนแจ้งให้ทราบด้วยนะครับ ผมจะส่งใบเสร็จสำหรับเงินที่ชำระบางส่วนให้ครับ"
   },
   {
     "id": 155,
@@ -1410,7 +1410,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "PFI or invoice",
-    "thai": "PFI หรือ invoice คะ"
+    "thai": "PFI หรือ invoice ครับ"
   },
   {
     "id": 157,
@@ -1419,7 +1419,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Proforma Invoice is right ?",
-    "thai": "Proforma Invoice ใช่ไหมคะ"
+    "thai": "Proforma Invoice ใช่ไหมครับ"
   },
   {
     "id": 158,
@@ -1455,7 +1455,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Yes.79521.75Baht first payment deposit.",
-    "thai": "ใช่ค่ะ 79,521.75 บาท เป็นเงินมัดจำงวดแรก"
+    "thai": "ใช่ครับ 79,521.75 บาท เป็นเงินมัดจำงวดแรก"
   },
   {
     "id": 162,
@@ -1482,7 +1482,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Confirm",
-    "thai": "ยืนยันค่ะ"
+    "thai": "ยืนยันครับ"
   },
   {
     "id": 165,
@@ -1491,7 +1491,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Thank you for your transfer Weco 430 edger compleat set.",
-    "thai": "ขอบคุณสำหรับการโอนเงินซื้อ Weco 430 edger ครบชุดค่ะ"
+    "thai": "ขอบคุณสำหรับการโอนเงินซื้อ Weco 430 edger ครบชุดครับ"
   },
   {
     "id": 166,
@@ -1662,7 +1662,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I'm attending a funeral; my aunt passed away a week ago. I'll follow up with my partner to see when the machinery can be shipped. He's refurbishing it overseas, so you should be able to get it. I'll have him send it by air freight.",
-    "thai": "ดิฉันกำลังร่วมงานศพ คุณป้าเสียไปเมื่อสัปดาห์ที่แล้ว ดิฉันจะตามพาร์ทเนอร์ดูว่าจะส่งเครื่องได้เมื่อไหร่ เขากำลัง refurbish ที่ต่างประเทศ คุณน่าจะได้รับ ดิฉันจะให้เขาส่งทางอากาศ"
+    "thai": "ผมกำลังร่วมงานศพ คุณป้าเสียไปเมื่อสัปดาห์ที่แล้ว ผมจะตามพาร์ทเนอร์ดูว่าจะส่งเครื่องได้เมื่อไหร่ เขากำลัง refurbish ที่ต่างประเทศ คุณน่าจะได้รับ ผมจะให้เขาส่งทางอากาศ"
   },
   {
     "id": 185,
@@ -1671,7 +1671,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I must apologize to you",
-    "thai": "ดิฉันต้องขอโทษคุณค่ะ"
+    "thai": "ผมต้องขอโทษคุณครับ"
   },
   {
     "id": 186,
@@ -1725,7 +1725,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I'm back now form Sri Lanka",
-    "thai": "ดิฉันกลับมาจากศรีลังกาแล้วค่ะ"
+    "thai": "ผมกลับมาจากศรีลังกาแล้วครับ"
   },
   {
     "id": 192,
@@ -1743,7 +1743,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I'm go to office check status let you know.",
-    "thai": "ดิฉันจะไปออฟฟิศตรวจสถานะ แล้วจะแจ้งให้ทราบ"
+    "thai": "ผมจะไปออฟฟิศตรวจสถานะ แล้วจะแจ้งให้ทราบ"
   },
   {
     "id": 194,
@@ -1752,7 +1752,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Wait please",
-    "thai": "รอสักครู่ค่ะ"
+    "thai": "รอสักครู่ครับ"
   },
   {
     "id": 195,
@@ -1869,7 +1869,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Chris, please wait until my colleague gets back to his factory. I parted ways with him at the Mido Optical Fairs in Milano. If he doesn't send it, I'll refund you this week. I'm taking full responsibility, so don't worry.",
-    "thai": "Chris คะ กรุณารอจนกว่าเพื่อนร่วมงานของดิฉันจะกลับเข้าโรงงาน ดิฉันแยกทางกับเขาที่งาน Mido Optical Fairs ที่มิลาน ถ้าเขาไม่ส่ง ดิฉันจะคืนเงินให้คุณภายในสัปดาห์นี้ ดิฉันรับผิดชอบเต็มที่ ไม่ต้องเป็นห่วงค่ะ"
+    "thai": "Chris ครับ กรุณารอจนกว่าเพื่อนร่วมงานของผมจะกลับเข้าโรงงาน ผมแยกทางกับเขาที่งาน Mido Optical Fairs ที่มิลาน ถ้าเขาไม่ส่ง ผมจะคืนเงินให้คุณภายในสัปดาห์นี้ ผมรับผิดชอบเต็มที่ ไม่ต้องเป็นห่วงครับ"
   },
   {
     "id": 208,
@@ -1878,7 +1878,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I apologize for any inconvenience caused. To ensure accuracy, I will follow up on this matter as quickly as possible.",
-    "thai": "ดิฉันต้องขออภัยในความไม่สะดวกที่เกิดขึ้น เพื่อความถูกต้อง ดิฉันจะติดตามเรื่องนี้ให้เร็วที่สุด"
+    "thai": "ผมต้องขออภัยในความไม่สะดวกที่เกิดขึ้น เพื่อความถูกต้อง ผมจะติดตามเรื่องนี้ให้เร็วที่สุด"
   },
   {
     "id": 209,
@@ -1896,7 +1896,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Wait please",
-    "thai": "รอสักครู่ค่ะ"
+    "thai": "รอสักครู่ครับ"
   },
   {
     "id": 211,
@@ -1905,7 +1905,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "My colleage still not tranfer.",
-    "thai": "เพื่อนร่วมงานยังไม่โอนค่ะ"
+    "thai": "เพื่อนร่วมงานยังไม่โอนครับ"
   },
   {
     "id": 212,
@@ -1914,7 +1914,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I'm promise you postpone on Tuesday",
-    "thai": "ดิฉันสัญญาว่าเลื่อนเป็นวันอังคาร"
+    "thai": "ผมสัญญาว่าเลื่อนเป็นวันอังคาร"
   },
   {
     "id": 213,
@@ -1923,7 +1923,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Sorry unconvinien for you.",
-    "thai": "ขออภัยในความไม่สะดวกค่ะ"
+    "thai": "ขออภัยในความไม่สะดวกครับ"
   },
   {
     "id": 214,
@@ -1995,7 +1995,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I'm sick in the hospital for 2 weeks. I'm following the cost of the product back. Please give me some time to finish this week. I'm sorry I didn't answer the call while I was hospitalized.",
-    "thai": "ดิฉันป่วยอยู่โรงพยาบาล 2 สัปดาห์ ดิฉันกำลังตามต้นทุนสินค้าให้ กรุณาให้เวลาดิฉันสัปดาห์นี้ ขออภัยที่ไม่ได้รับสายตอนเข้าโรงพยาบาลค่ะ"
+    "thai": "ผมป่วยอยู่โรงพยาบาล 2 สัปดาห์ ผมกำลังตามต้นทุนสินค้าให้ กรุณาให้เวลาผมสัปดาห์นี้ ขออภัยที่ไม่ได้รับสายตอนเข้าโรงพยาบาลครับ"
   },
   {
     "id": 222,
@@ -2013,7 +2013,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I forgot our appointment. I was waiting to talk to my colleague; he's also ill like me. The worker maintaining the machine informed me that they need to apply a rust-preventive primer coat to the inside of the machine and are waiting for the circuit board to be modified by the manufacturer. This happened while I was sick, initially waiting for him to return from Africa. He's working on the internal surface and it should be finished by March 5th at the latest. He will ship it as a special case, which I confirmed again after I informed him that Chris would issue a refund. However, after I got sick, you still need the machine. I asked him to send photos and to wait a little longer, Chris.",
-    "thai": "ดิฉันลืมนัด ดิฉันรอคุยกับเพื่อนร่วมงาน เขาก็ป่วยเหมือนกัน คนงานที่ดูแลเครื่องแจ้งว่าต้องเคลือบกันสนิมด้านในเครื่อง และรอผู้ผลิตปรับวงจรอิเล็กทรอนิกส์ เรื่องนี้เกิดขึ้นช่วงที่ดิฉันป่วย ตอนแรกรอเขากลับจากแอฟริกา เขากำลังทำพื้นผิวด้านใน น่าจะเสร็จไม่เกินวันที่ 5 มีนาคม เขาจะส่งเป็น special case ดิฉันยืนยันอีกครั้งหลังบอกเขาว่า Chris จะขอคืนเงิน แต่หลังจากดิฉันป่วย คุณยังต้องการเครื่อง ดิฉันขอให้เขาส่งรูปและรอเพิ่มอีกหน่อยนะคะ Chris"
+    "thai": "ผมลืมนัด ผมรอคุยกับเพื่อนร่วมงาน เขาก็ป่วยเหมือนกัน คนงานที่ดูแลเครื่องแจ้งว่าต้องเคลือบกันสนิมด้านในเครื่อง และรอผู้ผลิตปรับวงจรอิเล็กทรอนิกส์ เรื่องนี้เกิดขึ้นช่วงที่ผมป่วย ตอนแรกรอเขากลับจากแอฟริกา เขากำลังทำพื้นผิวด้านใน น่าจะเสร็จไม่เกินวันที่ 5 มีนาคม เขาจะส่งเป็น special case ผมยืนยันอีกครั้งหลังบอกเขาว่า Chris จะขอคืนเงิน แต่หลังจากผมป่วย คุณยังต้องการเครื่อง ผมขอให้เขาส่งรูปและรอเพิ่มอีกหน่อยนะครับ Chris"
   },
   {
     "id": 224,
@@ -2139,7 +2139,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Hi",
-    "thai": "สวัสดีค่ะ"
+    "thai": "สวัสดีครับ"
   },
   {
     "id": 238,
@@ -2148,7 +2148,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I forgot my phone. I just arrived back from Sri Lanka this morning. I apologize for causing you worry. I will follow up on the phone issue this afternoon or evening. It's alright if you want to proceed with legal action. I mentioned that I would inform you today.",
-    "thai": "ดิฉันลืมโทรศัพท์ เพิ่งกลับจากศรีลังกาเมื่อเช้านี้ ขออภัยที่ทำให้คุณกังวล ดิฉันจะตามเรื่องโทรศัพท์ช่วงบ่ายหรือเย็นนี้ ถ้าคุณจะดำเนินการทางกฎหมายก็ได้ ดิฉันบอกแล้วว่าจะแจ้งคุณวันนี้"
+    "thai": "ผมลืมโทรศัพท์ เพิ่งกลับจากศรีลังกาเมื่อเช้านี้ ขออภัยที่ทำให้คุณกังวล ผมจะตามเรื่องโทรศัพท์ช่วงบ่ายหรือเย็นนี้ ถ้าคุณจะดำเนินการทางกฎหมายก็ได้ ผมบอกแล้วว่าจะแจ้งคุณวันนี้"
   },
   {
     "id": 239,
@@ -2157,7 +2157,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "If that's the case, I think it's better if I arrange a return. I'll follow up with the seller first. I'm feeling uneasy about this, and time has already passed.",
-    "thai": "ถ้าเป็นแบบนั้น ดิฉันคิดว่าจัดเรื่องคืนเงินดีกว่า ดิฉันจะตามผู้ขายก่อน รู้สึกไม่สบายใจ และเวลาก็ผ่านไปแล้ว"
+    "thai": "ถ้าเป็นแบบนั้น ผมคิดว่าจัดเรื่องคืนเงินดีกว่า ผมจะตามผู้ขายก่อน รู้สึกไม่สบายใจ และเวลาก็ผ่านไปแล้ว"
   },
   {
     "id": 240,
@@ -2193,7 +2193,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I'm sorry to upset you. I'd rather give you a refund.",
-    "thai": "ขอโทษที่ทำให้คุณไม่สบายใจ ดิฉันขอคืนเงินดีกว่า"
+    "thai": "ขอโทษที่ทำให้คุณไม่สบายใจ ผมขอคืนเงินดีกว่า"
   },
   {
     "id": 244,
@@ -2400,7 +2400,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I followed up. It's a German holiday. I'll follow up again today.",
-    "thai": "ดิฉันตามแล้ว ที่เยอรมันเป็นวันหยุด จะตามอีกครั้งวันนี้ค่ะ"
+    "thai": "ผมตามแล้ว ที่เยอรมันเป็นวันหยุด จะตามอีกครั้งวันนี้ครับ"
   },
   {
     "id": 267,
@@ -2472,7 +2472,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Okay, I'll arrange the refund next week.",
-    "thai": "โอเค ดิฉันจะจัดการคืนเงินสัปดาห์หน้าค่ะ"
+    "thai": "โอเค ผมจะจัดการคืนเงินสัปดาห์หน้าครับ"
   },
   {
     "id": 275,
@@ -2499,7 +2499,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Oh, Chris, please tell him to follow up with the money transfer. Please wait 4-5 days. If he transfers it today, I will process the transfer.",
-    "thai": "Chris คะ ช่วยบอกให้เขาตามเรื่องโอนเงินด้วย รอ 4-5 วันนะคะ ถ้าเขาโอนวันนี้ ดิฉันจะดำเนินการโอนต่อ"
+    "thai": "Chris ครับ ช่วยบอกให้เขาตามเรื่องโอนเงินด้วย รอ 4-5 วันนะครับ ถ้าเขาโอนวันนี้ ผมจะดำเนินการโอนต่อ"
   },
   {
     "id": 278,
@@ -2526,7 +2526,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I told you I'll take responsibility. Please wait 2-3 days, it might even be today.",
-    "thai": "ดิฉันบอกแล้วว่าดิฉันจะรับผิดชอบ รอ 2-3 วันนะคะ อาจจะวันนี้ก็ได้"
+    "thai": "ผมบอกแล้วว่าผมจะรับผิดชอบ รอ 2-3 วันนะครับ อาจจะวันนี้ก็ได้"
   },
   {
     "id": 281,
@@ -2679,7 +2679,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Mr. Chris, please feel free to file a police report. I apologize for any inconvenience this may have caused, but you will receive a 100% refund with no deductions whatsoever. I am also requesting a refund from him. I had no intention of causing any harm. My apologies again.",
-    "thai": "คุณ Chris ค่ะ คุณสามารถแจ้งความได้เลย ดิฉันขออภัยในความไม่สะดวกที่อาจเกิดขึ้น คุณจะได้รับเงินคืน 100% โดยไม่มีการหักใด ๆ ดิฉันก็กำลังขอคืนเงินจากเขา ดิฉันไม่มีเจตนาทำให้เกิดความเสียหาย ขออภัยอีกครั้งค่ะ"
+    "thai": "คุณ Chris ครับ คุณสามารถแจ้งความได้เลย ผมขออภัยในความไม่สะดวกที่อาจเกิดขึ้น คุณจะได้รับเงินคืน 100% โดยไม่มีการหักใด ๆ ผมก็กำลังขอคืนเงินจากเขา ผมไม่มีเจตนาทำให้เกิดความเสียหาย ขออภัยอีกครั้งครับ"
   },
   {
     "id": 298,
@@ -2688,7 +2688,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "I'll be back from Sri Lanka soon. I might transfer the money before then. I'm leaving this Monday. It's a long holiday weekend there. I'll return it as soon as possible.",
-    "thai": "ดิฉันจะกลับจากศรีลังกาเร็ว ๆ นี้ อาจจะโอนเงินก่อนกลับ ดิฉันจะออกจันทร์นี้ เป็นวันหยุดยาวที่นั่น ดิฉันจะคืนให้เร็วที่สุด"
+    "thai": "ผมจะกลับจากศรีลังกาเร็ว ๆ นี้ อาจจะโอนเงินก่อนกลับ ผมจะออกจันทร์นี้ เป็นวันหยุดยาวที่นั่น ผมจะคืนให้เร็วที่สุด"
   },
   {
     "id": 299,
@@ -2715,7 +2715,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "\"Chris, who called me saying they were coming to meet me at the BBQ restaurant on the second floor to discuss the 70,000+ baht I received from you? What's the plan? You've already filed a police report and sent me the documents, which I've acknowledged. Why would someone I don't know threaten me and try to break into my restaurant? How could this happen? I already informed the police that I'm traveling to Sri Lanka on Monday and will return around Thursday. I might return the money before the end of the month. Is that correct according to what I told the police and what you recorded in your report? What exactly do you want that person to discuss with me? Please let me know so I can respond correctly and without violating any laws.\"",
-    "thai": "\"Chris คะ ใครโทรมาบอกว่าจะมาพบดิฉันที่ร้าน BBQ ชั้นสองเพื่อคุยเรื่องเงิน 70,000 กว่าบาทที่ดิฉันได้รับจากคุณ มีแผนยังไงคะ คุณแจ้งความและส่งเอกสารให้ดิฉันแล้ว ดิฉันรับทราบแล้ว ทำไมคนที่ดิฉันไม่รู้จักถึงข่มขู่และพยายามบุกร้านดิฉัน เรื่องนี้เกิดขึ้นได้ยังไง ดิฉันแจ้งตำรวจแล้วว่าจันทร์นี้จะไปศรีลังกาและกลับวันพฤหัส อาจจะคืนเงินก่อนสิ้นเดือน ใช่ไหมตามที่ดิฉันบอกตำรวจและที่คุณบันทึกในรายงาน คุณอยากให้คนนั้นคุยกับดิฉันเรื่องอะไร โปรดแจ้งดิฉันเพื่อตอบให้ถูกต้องและไม่ผิดกฎหมาย\""
+    "thai": "\"Chris ครับ ใครโทรมาบอกว่าจะมาพบผมที่ร้าน BBQ ชั้นสองเพื่อคุยเรื่องเงิน 70,000 กว่าบาทที่ผมได้รับจากคุณ มีแผนยังไงครับ คุณแจ้งความและส่งเอกสารให้ผมแล้ว ผมรับทราบแล้ว ทำไมคนที่ผมไม่รู้จักถึงข่มขู่และพยายามบุกร้านผม เรื่องนี้เกิดขึ้นได้ยังไง ผมแจ้งตำรวจแล้วว่าจันทร์นี้จะไปศรีลังกาและกลับวันพฤหัส อาจจะคืนเงินก่อนสิ้นเดือน ใช่ไหมตามที่ผมบอกตำรวจและที่คุณบันทึกในรายงาน คุณอยากให้คนนั้นคุยกับผมเรื่องอะไร โปรดแจ้งผมเพื่อตอบให้ถูกต้องและไม่ผิดกฎหมาย\""
   },
   {
     "id": 302,
@@ -2742,7 +2742,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Do you want me to keep the documents you sent? If so, you must inform your friend as well.",
-    "thai": "อยากให้ดิฉันเก็บเอกสารที่คุณส่งมาไว้ไหมคะ ถ้าใช่ คุณต้องบอกเพื่อนของคุณด้วย"
+    "thai": "อยากให้ผมเก็บเอกสารที่คุณส่งมาไว้ไหมครับ ถ้าใช่ คุณต้องบอกเพื่อนของคุณด้วย"
   },
   {
     "id": 305,
@@ -2751,7 +2751,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "The shop will be open from 3:00 PM to 3:00 AM.",
-    "thai": "ร้านเปิด 15:00 - 03:00 น. ค่ะ"
+    "thai": "ร้านเปิด 15:00 - 03:00 น. ครับ"
   },
   {
     "id": 306,
@@ -2805,7 +2805,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Hi",
-    "thai": "สวัสดีค่ะ"
+    "thai": "สวัสดีครับ"
   },
   {
     "id": 312,
@@ -2814,7 +2814,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Hi, I apologize for the missed payment deadline. I would like to postpone it to May 3-5, 2026 because I have been waiting for a response and they haven't responded yet. Could you please wait another 2-3 days and expedite the process?",
-    "thai": "สวัสดีค่ะ ขออภัยที่พลาดกำหนดชำระเงิน ดิฉันขอเลื่อนเป็นวันที่ 3-5 พฤษภาคม 2026 เพราะดิฉันรอคำตอบและเขายังไม่ตอบกลับ ขอเวลาอีก 2-3 วันและช่วยเร่งกระบวนการได้ไหมคะ"
+    "thai": "สวัสดีครับ ขออภัยที่พลาดกำหนดชำระเงิน ผมขอเลื่อนเป็นวันที่ 3-5 พฤษภาคม 2026 เพราะผมรอคำตอบและเขายังไม่ตอบกลับ ขอเวลาอีก 2-3 วันและช่วยเร่งกระบวนการได้ไหมครับ"
   },
   {
     "id": 313,
@@ -2823,7 +2823,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Regarding the process, please proceed. I'm not requesting this. If you can wait, please do so in 2-3 days.",
-    "thai": "เกี่ยวกับกระบวนการ กรุณาดำเนินการเลยค่ะ ดิฉันไม่ได้ขอร้อง ถ้ารอได้ก็รอ 2-3 วันค่ะ"
+    "thai": "เกี่ยวกับกระบวนการ กรุณาดำเนินการเลยครับ ผมไม่ได้ขอร้อง ถ้ารอได้ก็รอ 2-3 วันครับ"
   },
   {
     "id": 314,
@@ -2877,7 +2877,7 @@
     "is_system": false,
     "media_filename": null,
     "original": "Yes. It will be finish today.",
-    "thai": "ค่ะ จะเสร็จวันนี้ค่ะ"
+    "thai": "ครับ จะเสร็จวันนี้ครับ"
   },
   {
     "id": 320,
