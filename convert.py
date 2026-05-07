@@ -48,6 +48,12 @@ def main():
              "Images found here will be embedded in the PDF.",
     )
     parser.add_argument(
+        "--translations",
+        default=None,
+        metavar="FILE",
+        help="Path to translations.json; generates a dual-language A4 landscape PDF.",
+    )
+    parser.add_argument(
         "--output",
         default=None,
         metavar="FILE",
@@ -88,38 +94,62 @@ def main():
         )
         sys.exit(1)
 
-    from parser import parse_file, detect_date_format
-    from renderer import render_html
+    from renderer import render_html, render_translated_html
 
-    # --- Resolve date format ---
-    date_format = args.date_format
-    if date_format == "auto":
-        detected = detect_date_format(str(input_path))
-        if detected == "ambiguous":
-            print(
-                "Date format is ambiguous in this export "
-                "(no day > 12 found to disambiguate)."
-            )
-            choice = input(
-                "Are dates D/M/Y (e.g. 5/12 = 5 December) "
-                "or M/D/Y (e.g. 5/12 = May 12)? [dmy/mdy] "
-            ).strip().lower()
-            date_format = "mdy" if choice.startswith("m") else "dmy"
-        else:
-            date_format = detected
-            print(f"Detected date format: {date_format.upper()}")
+    # --- Dual-language mode ---
+    if args.translations:
+        import json
+        trans_path = Path(args.translations)
+        if not trans_path.is_file():
+            print(f"Error: translations file not found: {trans_path}", file=sys.stderr)
+            sys.exit(1)
+        entries = json.loads(trans_path.read_text(encoding="utf-8"))
+        print(f"Loaded {len(entries)} entries from {trans_path}")
+        print(f"Rendering dual-language HTML ({args.theme} theme) ...")
+        html_content = render_translated_html(
+            entries=entries,
+            me=me,
+            theme=args.theme,
+            media_dir=args.media,
+        )
+        pdf_format = "A4"
+        pdf_landscape = True
+        pdf_margin = {"top": "8mm", "bottom": "8mm", "left": "10mm", "right": "10mm"}
+    else:
+        from parser import parse_file, detect_date_format
 
-    print(f"Parsing {input_path} ...")
-    messages = parse_file(str(input_path), date_format=date_format)
-    print(f"  {len(messages)} messages found.")
+        # --- Resolve date format ---
+        date_format = args.date_format
+        if date_format == "auto":
+            detected = detect_date_format(str(input_path))
+            if detected == "ambiguous":
+                print(
+                    "Date format is ambiguous in this export "
+                    "(no day > 12 found to disambiguate)."
+                )
+                choice = input(
+                    "Are dates D/M/Y (e.g. 5/12 = 5 December) "
+                    "or M/D/Y (e.g. 5/12 = May 12)? [dmy/mdy] "
+                ).strip().lower()
+                date_format = "mdy" if choice.startswith("m") else "dmy"
+            else:
+                date_format = detected
+                print(f"Detected date format: {date_format.upper()}")
 
-    print(f"Rendering HTML ({args.theme} theme) ...")
-    html_content = render_html(
-        messages=messages,
-        me=me,
-        theme=args.theme,
-        media_dir=args.media,
-    )
+        print(f"Parsing {input_path} ...")
+        messages = parse_file(str(input_path), date_format=date_format)
+        print(f"  {len(messages)} messages found.")
+
+        print(f"Rendering HTML ({args.theme} theme) ...")
+        html_content = render_html(
+            messages=messages,
+            me=me,
+            theme=args.theme,
+            media_dir=args.media,
+        )
+        pdf_format = "A4"
+        pdf_landscape = False
+        pdf_margin = {"top": "10mm", "bottom": "10mm", "left": "8mm", "right": "8mm"}
 
     # Write HTML to a temp file so Chromium can resolve relative paths
     import tempfile
@@ -129,17 +159,25 @@ def main():
         tmp.write(html_content)
         tmp_path = tmp.name
 
+    # Locate Chromium — try default install first, then known fallback path
+    _CHROMIUM_FALLBACK = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
+
     print(f"Generating PDF -> {output_path} ...")
     try:
         with sync_playwright() as p:
-            browser = p.chromium.launch()
+            launch_kwargs = {}
+            import os as _os
+            if _os.path.isfile(_CHROMIUM_FALLBACK):
+                launch_kwargs["executable_path"] = _CHROMIUM_FALLBACK
+            browser = p.chromium.launch(**launch_kwargs)
             page = browser.new_page()
             page.goto(f"file:///{tmp_path.replace(os.sep, '/')}")
             page.wait_for_load_state("networkidle")
             page.pdf(
                 path=str(output_path),
-                format="A4",
-                margin={"top": "10mm", "bottom": "10mm", "left": "8mm", "right": "8mm"},
+                format=pdf_format,
+                landscape=pdf_landscape,
+                margin=pdf_margin,
                 print_background=True,
             )
             browser.close()

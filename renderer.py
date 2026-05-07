@@ -5,6 +5,7 @@ with optional base64-encoded image embedding for media attachments.
 
 import base64
 import os
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
@@ -79,3 +80,38 @@ def render_html(messages: list, me: str, theme: str = "light",
 
     html = template.render(messages=messages, me=me, theme=theme)
     return html
+
+
+def render_translated_html(entries: list, me: str, theme: str = "light",
+                           media_dir: Optional[str] = None) -> str:
+    """
+    Render a translations.json entry list as an A4-landscape dual-language HTML.
+
+    Parameters
+    ----------
+    entries   : list of dicts from translations.json
+    me        : display name of the user whose messages appear on the right
+    theme     : "light" or "dark"
+    media_dir : optional folder containing exported media files
+    """
+    env = Environment(
+        loader=FileSystemLoader(str(_TEMPLATES_DIR)),
+        autoescape=True,
+    )
+    template = env.get_template("translated.html")
+
+    for e in entries:
+        ts = datetime.fromisoformat(e["timestamp"])
+        e["date_str"] = ts.strftime("%d %B %Y").lstrip("0")
+        e["time_str"] = ts.strftime("%H:%M")
+
+        fn = e.get("media_filename")
+        if fn and fn != "<Media omitted>":
+            b64, mime = _embed_image(media_dir, fn)
+            e["media_b64"] = b64
+            e["mime_type"] = mime
+        else:
+            e["media_b64"] = None
+            e["mime_type"] = None
+
+    return template.render(entries=entries, me=me, theme=theme)

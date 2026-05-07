@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WhatsApp Chat — Dual Language</title>
+<style>
+  @page { size: A4 landscape; margin: 8mm 10mm; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    {% if theme == "dark" %}
+    --bg:           #0B141A;
+    --sent-bg:      #005C4B;
+    --recv-bg:      #202C33;
+    --text:         #E9EDE9;
+    --ts:           #8696A0;
+    --sep-bg:       rgba(17,27,33,0.85);
+    --sep-text:     #8696A0;
+    --sender-color: #00A884;
+    --media-bg:     #2A3942;
+    --media-text:   #8696A0;
+    --header-bg:    #1F2C34;
+    --header-text:  #E9EDE9;
+    --divider:      #2A3942;
+    {% else %}
+    --bg:           #ECE5DD;
+    --sent-bg:      #DCF8C6;
+    --recv-bg:      #FFFFFF;
+    --text:         #111111;
+    --ts:           #999999;
+    --sep-bg:       #E1F3FB;
+    --sep-text:     #555555;
+    --sender-color: #075E54;
+    --media-bg:     #f0f0f0;
+    --media-text:   #666666;
+    --header-bg:    #075E54;
+    --header-text:  #FFFFFF;
+    --divider:      #CBCBCB;
+    {% endif %}
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: var(--text);
+    background: white;
+  }
+
+  /* ---- Page header ---- */
+  .page-header {
+    display: flex;
+    margin-bottom: 4px;
+  }
+  .col-label {
+    flex: 1;
+    background: var(--header-bg);
+    color: var(--header-text);
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+  }
+  .col-label.right { text-align: right; }
+  .col-gap-h { width: 16px; background: white; }
+
+  /* ---- Chat background ---- */
+  .chat-wrap {
+    background: var(--bg);
+    padding: 4px 0;
+  }
+
+  /* ---- Per-entry row ---- */
+  .entry {
+    display: flex;
+    align-items: flex-start;
+    margin: 1px 0;
+    page-break-inside: avoid;
+  }
+
+  .en-side {
+    flex: 1;
+    padding: 0 8px 0 6px;
+    display: flex;
+  }
+  .th-side {
+    flex: 1;
+    padding: 0 6px 0 8px;
+    display: flex;
+    border-left: 1px solid var(--divider);
+  }
+
+  .entry.sent  .en-side { justify-content: flex-end; }
+  .entry.sent  .th-side { justify-content: flex-end; }
+  .entry.received .en-side { justify-content: flex-start; }
+  .entry.received .th-side { justify-content: flex-start; }
+
+  /* ---- Date separator ---- */
+  .date-row {
+    display: flex;
+    align-items: center;
+    margin: 7px 0 4px;
+    page-break-inside: avoid;
+  }
+  .date-cell {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 6px;
+  }
+  .date-cell:last-child { border-left: 1px solid var(--divider); }
+  .date-cell span {
+    background: var(--sep-bg);
+    color: var(--sep-text);
+    border-radius: 8px;
+    padding: 2px 9px;
+    font-size: 10px;
+  }
+
+  /* ---- System message ---- */
+  .sys-row {
+    display: flex;
+    margin: 3px 0;
+    page-break-inside: avoid;
+  }
+  .sys-cell {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 6px;
+  }
+  .sys-cell:last-child { border-left: 1px solid var(--divider); }
+  .sys-cell span {
+    background: var(--sep-bg);
+    color: var(--sep-text);
+    border-radius: 8px;
+    padding: 2px 10px;
+    font-size: 10px;
+    text-align: center;
+    max-width: 90%;
+  }
+
+  /* ---- Bubble ---- */
+  .bubble {
+    position: relative;
+    max-width: 88%;
+    padding: 4px 8px 3px;
+    border-radius: 8px;
+    word-wrap: break-word;
+  }
+  .entry.sent     .bubble { background: var(--sent-bg); border-top-right-radius: 0; }
+  .entry.received .bubble { background: var(--recv-bg); border-top-left-radius: 0; }
+
+  /* Sent tail */
+  .entry.sent .bubble::after {
+    content: "";
+    position: absolute;
+    top: 0; right: -7px;
+    width: 7px; height: 12px;
+    background-repeat: no-repeat;
+    background-size: 7px 12px;
+    {% if theme == "dark" %}
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='12'%3E%3Cpolygon points='0,0 7,0 0,12' fill='%23005C4B'/%3E%3C/svg%3E");
+    {% else %}
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='12'%3E%3Cpolygon points='0,0 7,0 0,12' fill='%23DCF8C6'/%3E%3C/svg%3E");
+    {% endif %}
+  }
+
+  /* Received tail */
+  .entry.received .bubble::after {
+    content: "";
+    position: absolute;
+    top: 0; left: -7px;
+    width: 7px; height: 12px;
+    background-repeat: no-repeat;
+    background-size: 7px 12px;
+    {% if theme == "dark" %}
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='12'%3E%3Cpolygon points='7,0 0,0 7,12' fill='%23202C33'/%3E%3C/svg%3E");
+    {% else %}
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='12'%3E%3Cpolygon points='7,0 0,0 7,12' fill='%23FFFFFF'/%3E%3C/svg%3E");
+    {% endif %}
+  }
+
+  .sender-name {
+    font-size: 10px;
+    font-weight: bold;
+    color: var(--sender-color);
+    margin-bottom: 1px;
+  }
+
+  .msg-text {
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+  }
+
+  .msg-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1px;
+  }
+
+  .msg-time {
+    font-size: 9px;
+    color: var(--ts);
+    white-space: nowrap;
+  }
+
+  .media-img {
+    display: block;
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+  }
+
+  .media-placeholder {
+    display: flex;
+    align-items: center;
+    background: var(--media-bg);
+    color: var(--media-text);
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 10px;
+    margin-bottom: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="col-label">English</div>
+  <div class="col-gap-h"></div>
+  <div class="col-label right">ภาษาไทย</div>
+</div>
+
+<div class="chat-wrap">
+
+{% set ns = namespace(last_date=None) %}
+
+{% for entry in entries %}
+
+  {# Date separator #}
+  {% set msg_date = entry.date_str %}
+  {% if msg_date != ns.last_date %}
+    {% set ns.last_date = msg_date %}
+    <div class="date-row">
+      <div class="date-cell"><span>{{ msg_date }}</span></div>
+      <div class="date-cell"><span>{{ msg_date }}</span></div>
+    </div>
+  {% endif %}
+
+  {# System message #}
+  {% if entry.is_system %}
+    <div class="sys-row">
+      <div class="sys-cell"><span>{{ entry.original }}</span></div>
+      <div class="sys-cell"><span>{{ entry.thai if entry.thai else entry.original }}</span></div>
+    </div>
+
+  {# Regular message #}
+  {% else %}
+    {% set side = "sent" if entry.sender == me else "received" %}
+    <div class="entry {{ side }}">
+
+      {# English side #}
+      <div class="en-side">
+        <div class="bubble">
+          {% if entry.sender != me %}<div class="sender-name">{{ entry.sender }}</div>{% endif %}
+          {% if entry.media_b64 %}
+            <img class="media-img" src="data:{{ entry.mime_type }};base64,{{ entry.media_b64 }}" alt="media">
+          {% elif entry.media_filename %}
+            <div class="media-placeholder">📎 {{ entry.media_filename }}</div>
+          {% endif %}
+          {% if entry.original %}<div class="msg-text">{{ entry.original }}</div>{% endif %}
+          <div class="msg-footer"><span class="msg-time">{{ entry.time_str }}</span></div>
+        </div>
+      </div>
+
+      {# Thai side #}
+      <div class="th-side">
+        <div class="bubble">
+          {% if entry.sender != me %}<div class="sender-name">{{ entry.sender }}</div>{% endif %}
+          {% if entry.media_b64 %}
+            <img class="media-img" src="data:{{ entry.mime_type }};base64,{{ entry.media_b64 }}" alt="media">
+          {% elif entry.media_filename %}
+            <div class="media-placeholder">📎 {{ entry.media_filename }}</div>
+          {% endif %}
+          {% set display_thai = entry.thai if entry.thai else entry.original %}
+          {% if display_thai %}<div class="msg-text">{{ display_thai }}</div>{% endif %}
+          <div class="msg-footer"><span class="msg-time">{{ entry.time_str }}</span></div>
+        </div>
+      </div>
+
+    </div>
+  {% endif %}
+
+{% endfor %}
+
+</div>
+</body>
+</html>
