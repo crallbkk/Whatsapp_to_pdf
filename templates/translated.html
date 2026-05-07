@@ -5,140 +5,131 @@
 <title>WhatsApp Chat — Dual Language</title>
 <style>
   @page { size: A4 landscape; margin: 6mm 8mm; }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    background: #e8e8e8;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 18px;
-    min-height: 100vh;
-    padding: 4px 0;
+    background: #d0d0d0;
   }
 
   /* ------------------------------------------------------------------ */
-  /* Phone shell                                                           */
+  /* Table — the ONLY way to guarantee per-row height equality           */
+  /* thead repeats the phone header on every PDF page                    */
   /* ------------------------------------------------------------------ */
-  .phone {
-    width: 370px;
+  .dual {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  /* column widths: left | gap | right */
+  .dual col.cl { width: calc(50% - 10px); }
+  .dual col.cg { width: 20px; }
+  .dual col.cr { width: calc(50% - 10px); }
+
+  /* ------------------------------------------------------------------ */
+  /* Phone header (thead) — repeats on every printed page               */
+  /* ------------------------------------------------------------------ */
+  thead td {
+    padding: 0;
+    vertical-align: bottom;
+  }
+
+  thead .ph {                         /* phone head cell */
     background: #1a1a1a;
-    border-radius: 44px;
-    padding: 10px;
-    box-shadow: 0 0 0 2px #3a3a3a, 0 8px 32px rgba(0,0,0,0.45);
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
+    padding: 10px 10px 0;
+    border-radius: 38px 38px 0 0;
   }
 
-  .phone-inner {
+  thead .gap-h { background: #d0d0d0; }
+
+  .phone-top {
     background: #fff;
-    border-radius: 36px;
+    border-radius: 28px 28px 0 0;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
   }
 
-  /* ---- Notch bar ---- */
   .notch-bar {
     background: #000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 20px 4px;
-    flex-shrink: 0;
+    padding: 6px 18px 4px;
+    position: relative;
   }
 
-  .notch-center {
+  .notch-pill {
     position: absolute;
-    left: 50%;
+    top: 0; left: 50%;
     transform: translateX(-50%);
-    width: 110px;
-    height: 22px;
+    width: 96px; height: 20px;
     background: #000;
-    border-radius: 0 0 16px 16px;
+    border-radius: 0 0 14px 14px;
   }
 
-  .status-left {
-    color: #fff;
-    font-size: 11px;
-    font-weight: 600;
-    z-index: 1;
-  }
+  .st { color: #fff; font-size: 11px; font-weight: 600; position: relative; z-index: 1; }
+  .si { color: #fff; font-size: 10px; position: relative; z-index: 1; }
 
-  .status-right {
-    color: #fff;
-    font-size: 10px;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  /* ---- WhatsApp header ---- */
-  .wa-header {
+  .wa-hdr {
     background: #075E54;
-    padding: 8px 12px;
+    padding: 7px 10px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
+    gap: 9px;
   }
 
   .avatar {
-    width: 36px;
-    height: 36px;
+    width: 32px; height: 32px;
     border-radius: 50%;
     background: #b0bec5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
+  .avatar svg { width: 20px; height: 20px; fill: #fff; }
 
-  .avatar svg { width: 22px; height: 22px; fill: #fff; }
+  .wa-name   { color: #fff; font-size: 12px; font-weight: bold; }
+  .wa-status { color: rgba(255,255,255,0.75); font-size: 10px; }
 
-  .wa-contact {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .wa-name {
-    color: #fff;
-    font-size: 13px;
-    font-weight: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .wa-status {
-    color: rgba(255,255,255,0.75);
-    font-size: 10px;
-  }
-
-  /* ---- Chat body ---- */
-  .chat-body {
+  /* ------------------------------------------------------------------ */
+  /* Message rows (tbody)                                                 */
+  /* ------------------------------------------------------------------ */
+  tbody td.lc,
+  tbody td.rc {
     background: #ECE5DD;
-    flex: 1;
-    overflow: hidden;
-    padding: 6px 8px;
+    vertical-align: top;
+    padding: 1px 7px;
+    border-left:  10px solid #1a1a1a;
+    border-right: 10px solid #1a1a1a;
   }
+
+  tbody td.gc { background: #d0d0d0; }
+
+  /* date / system rows reuse lc/rc but with centered content */
+  tr.dr td.lc,
+  tr.dr td.rc { padding: 7px 7px 3px; }
+
+  tr.sr td.lc,
+  tr.sr td.rc { padding: 2px 7px; }
+
+  /* avoid splitting a single message across pages */
+  tr.mr { page-break-inside: avoid; }
+
+  /* ------------------------------------------------------------------ */
+  /* Cell inner — handles sent/received alignment                         */
+  /* ------------------------------------------------------------------ */
+  .ci {
+    display: flex;
+  }
+  .ci.sent     { justify-content: flex-end; }
+  .ci.received { justify-content: flex-start; }
+  .ci.center   { justify-content: center; }
 
   /* ------------------------------------------------------------------ */
   /* Date separator                                                        */
   /* ------------------------------------------------------------------ */
   .date-sep {
-    display: flex;
-    justify-content: center;
-    margin: 8px 0 5px;
-  }
-
-  .date-sep span {
+    display: inline-block;
     background: #E1F3FB;
     color: #555;
     border-radius: 8px;
@@ -149,112 +140,70 @@
   /* ------------------------------------------------------------------ */
   /* System message                                                        */
   /* ------------------------------------------------------------------ */
-  .system-msg {
-    display: flex;
-    justify-content: center;
-    margin: 4px 0;
-  }
-
-  .system-msg span {
+  .sys-msg {
+    display: inline-block;
     background: #fff8d6;
     color: #6a4d10;
     border-radius: 8px;
     padding: 3px 10px;
     font-size: 9.5px;
     text-align: center;
-    max-width: 90%;
+    max-width: 96%;
     line-height: 1.35;
   }
 
   /* ------------------------------------------------------------------ */
-  /* Message rows                                                          */
-  /* ------------------------------------------------------------------ */
-  .msg-row {
-    display: flex;
-    margin: 2px 0;
-    page-break-inside: avoid;
-  }
-
-  .msg-row.sent     { justify-content: flex-end; }
-  .msg-row.received { justify-content: flex-start; }
-
-  /* ------------------------------------------------------------------ */
-  /* Bubbles                                                               */
+  /* Bubble                                                               */
   /* ------------------------------------------------------------------ */
   .bubble {
     position: relative;
-    max-width: 82%;
+    max-width: 88%;
     padding: 4px 8px 3px;
     border-radius: 8px;
     word-wrap: break-word;
   }
 
-  .msg-row.sent     .bubble { background: #DCF8C6; border-top-right-radius: 0; }
-  .msg-row.received .bubble { background: #FFFFFF; border-top-left-radius: 0; }
+  .sent     .bubble { background: #DCF8C6; border-top-right-radius: 0; }
+  .received .bubble { background: #FFFFFF; border-top-left-radius: 0; }
 
-  /* Sent tail */
-  .msg-row.sent .bubble::after {
+  /* tails */
+  .sent .bubble::after {
     content: "";
     position: absolute;
     top: 0; right: -7px;
     width: 7px; height: 12px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='12'%3E%3Cpolygon points='0,0 7,0 0,12' fill='%23DCF8C6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='12'%3E%3Cpolygon points='0,0 7,0 0,12' fill='%23DCF8C6'/%3E%3C/svg%3E") no-repeat;
     background-size: 7px 12px;
   }
 
-  /* Received tail */
-  .msg-row.received .bubble::after {
+  .received .bubble::after {
     content: "";
     position: absolute;
     top: 0; left: -7px;
     width: 7px; height: 12px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='12'%3E%3Cpolygon points='7,0 0,0 7,12' fill='%23FFFFFF'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='12'%3E%3Cpolygon points='7,0 0,0 7,12' fill='%23FFFFFF'/%3E%3C/svg%3E") no-repeat;
     background-size: 7px 12px;
   }
 
-  .sender-name {
-    font-size: 10px;
-    font-weight: bold;
-    color: #075E54;
-    margin-bottom: 1px;
-  }
-
-  .msg-text {
-    font-size: 11px;
-    line-height: 1.4;
-    white-space: pre-wrap;
-    color: #111;
-  }
-
-  .msg-footer {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1px;
-  }
-
-  .msg-time {
-    font-size: 9px;
-    color: #999;
-    white-space: nowrap;
-  }
+  .sender-name { font-size: 10px; font-weight: bold; color: #075E54; margin-bottom: 1px; }
+  .msg-text    { font-size: 11px; line-height: 1.4; white-space: pre-wrap; color: #111; }
+  .msg-footer  { display: flex; justify-content: flex-end; margin-top: 1px; }
+  .msg-time    { font-size: 9px; color: #999; white-space: nowrap; }
 
   .media-img {
     display: block;
-    max-width: 140px;
-    max-height: 140px;
+    max-width: 130px; max-height: 130px;
     border-radius: 4px;
     margin-bottom: 2px;
   }
 
-  .media-placeholder {
+  .media-ph {
     display: flex;
     align-items: center;
     background: #f0f0f0;
     color: #666;
     border-radius: 4px;
-    padding: 6px 10px;
+    padding: 5px 9px;
     font-size: 10px;
     margin-bottom: 2px;
   }
@@ -262,87 +211,91 @@
 </head>
 <body>
 
-{% macro render_messages(entries, me, lang) %}
-{% set ns = namespace(last_date=None) %}
-{% for entry in entries %}
-
-  {% set msg_date = entry.date_str %}
-  {% if msg_date != ns.last_date %}
-    {% set ns.last_date = msg_date %}
-    <div class="date-sep"><span>{{ msg_date }}</span></div>
-  {% endif %}
-
-  {% if entry.is_system %}
-    <div class="system-msg">
-      <span>{{ entry.thai if (lang == "thai" and entry.thai) else entry.original }}</span>
+{% macro phone_header(name) %}
+<div class="phone-top">
+  <div class="notch-bar">
+    <div class="notch-pill"></div>
+    <span class="st">9:41</span>
+    <span class="si">••• 100%</span>
+  </div>
+  <div class="wa-hdr">
+    <div class="avatar">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
     </div>
-
-  {% else %}
-    {% set side = "sent" if entry.sender == me else "received" %}
-    {% set text = entry.thai if (lang == "thai" and entry.thai) else entry.original %}
-    <div class="msg-row {{ side }}">
-      <div class="bubble">
-        {% if entry.sender != me %}<div class="sender-name">{{ entry.sender }}</div>{% endif %}
-        {% if entry.media_b64 %}
-          <img class="media-img" src="data:{{ entry.mime_type }};base64,{{ entry.media_b64 }}" alt="media">
-        {% elif entry.media_filename %}
-          <div class="media-placeholder">📎 {{ entry.media_filename }}</div>
-        {% endif %}
-        {% if text %}<div class="msg-text">{{ text }}</div>{% endif %}
-        <div class="msg-footer"><span class="msg-time">{{ entry.time_str }}</span></div>
-      </div>
+    <div>
+      <div class="wa-name">{{ name }}</div>
+      <div class="wa-status">online</div>
     </div>
-  {% endif %}
+  </div>
+</div>
+{% endmacro %}
 
-{% endfor %}
+{% macro bubble_content(entry, text) %}
+{% if entry.sender != me %}<div class="sender-name">{{ entry.sender }}</div>{% endif %}
+{% if entry.media_b64 %}
+  <img class="media-img" src="data:{{ entry.mime_type }};base64,{{ entry.media_b64 }}" alt="media">
+{% elif entry.media_filename %}
+  <div class="media-ph">📎 {{ entry.media_filename }}</div>
+{% endif %}
+{% if text %}<div class="msg-text">{{ text }}</div>{% endif %}
+<div class="msg-footer"><span class="msg-time">{{ entry.time_str }}</span></div>
 {% endmacro %}
 
 
-<!-- LEFT PHONE: English -->
-<div class="phone">
-  <div class="phone-inner">
-    <div class="notch-bar" style="position:relative;">
-      <div class="notch-center"></div>
-      <span class="status-left">9:41</span>
-      <span class="status-right">••• 100%</span>
-    </div>
-    <div class="wa-header">
-      <div class="avatar">
-        <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-      </div>
-      <div class="wa-contact">
-        <div class="wa-name">{{ other_name }}</div>
-        <div class="wa-status">online</div>
-      </div>
-    </div>
-    <div class="chat-body">
-      {{ render_messages(entries, me, "english") }}
-    </div>
-  </div>
-</div>
+<table class="dual">
+  <colgroup>
+    <col class="cl">
+    <col class="cg">
+    <col class="cr">
+  </colgroup>
 
-<!-- RIGHT PHONE: Thai -->
-<div class="phone">
-  <div class="phone-inner">
-    <div class="notch-bar" style="position:relative;">
-      <div class="notch-center"></div>
-      <span class="status-left">9:41</span>
-      <span class="status-right">••• 100%</span>
-    </div>
-    <div class="wa-header">
-      <div class="avatar">
-        <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-      </div>
-      <div class="wa-contact">
-        <div class="wa-name">{{ other_name }}</div>
-        <div class="wa-status">online</div>
-      </div>
-    </div>
-    <div class="chat-body">
-      {{ render_messages(entries, me, "thai") }}
-    </div>
-  </div>
-</div>
+  <!-- Phone header — repeats on every PDF page -->
+  <thead>
+    <tr>
+      <td class="ph">{{ phone_header(other_name) }}</td>
+      <td class="gap-h"></td>
+      <td class="ph">{{ phone_header(other_name) }}</td>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% set ns = namespace(last_date=None) %}
+  {% for entry in entries %}
+
+    {% set msg_date = entry.date_str %}
+    {% if msg_date != ns.last_date %}
+      {% set ns.last_date = msg_date %}
+      <tr class="dr">
+        <td class="lc"><div class="ci center"><span class="date-sep">{{ msg_date }}</span></div></td>
+        <td class="gc"></td>
+        <td class="rc"><div class="ci center"><span class="date-sep">{{ msg_date }}</span></div></td>
+      </tr>
+    {% endif %}
+
+    {% if entry.is_system %}
+      <tr class="sr">
+        <td class="lc"><div class="ci center"><span class="sys-msg">{{ entry.original }}</span></div></td>
+        <td class="gc"></td>
+        <td class="rc"><div class="ci center"><span class="sys-msg">{{ entry.thai if entry.thai else entry.original }}</span></div></td>
+      </tr>
+
+    {% else %}
+      {% set side = "sent" if entry.sender == me else "received" %}
+      {% set thai_text = entry.thai if entry.thai else entry.original %}
+      <tr class="mr">
+        <td class="lc">
+          <div class="ci {{ side }}"><div class="bubble">{{ bubble_content(entry, entry.original) }}</div></div>
+        </td>
+        <td class="gc"></td>
+        <td class="rc">
+          <div class="ci {{ side }}"><div class="bubble">{{ bubble_content(entry, thai_text) }}</div></div>
+        </td>
+      </tr>
+    {% endif %}
+
+  {% endfor %}
+  </tbody>
+</table>
 
 </body>
 </html>
