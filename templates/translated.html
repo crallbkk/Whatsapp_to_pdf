@@ -29,11 +29,17 @@
   .dual col.cr { width: calc(50% - 10px); }
 
   /* ------------------------------------------------------------------ */
-  /* Phone header (thead) — repeats on every printed page               */
+  /* Phone header / footer — declared in <thead>/<tfoot> but rendered    */
+  /* as ordinary row groups so they appear ONCE (top & bottom of the     */
+  /* whole table) instead of being repeated on every printed page.       */
+  /* The 10px black side bezels on tbody cells flow continuously across  */
+  /* page breaks, so the result reads as ONE long phone screenshot.      */
   /* ------------------------------------------------------------------ */
-  thead td {
+  thead, tfoot { display: table-row-group; }
+
+  thead td, tfoot td {
     padding: 0;
-    vertical-align: bottom;
+    vertical-align: top;
   }
 
   thead .ph {                         /* phone head cell */
@@ -42,7 +48,28 @@
     border-radius: 38px 38px 0 0;
   }
 
-  thead .gap-h { background: #d0d0d0; }
+  thead .gap-h, tfoot .gap-f { background: #d0d0d0; }
+
+  tfoot .pf {                         /* phone foot cell */
+    background: #1a1a1a;
+    padding: 0 10px 10px;
+    border-radius: 0 0 38px 38px;
+  }
+
+  .phone-bot {
+    background: #ECE5DD;
+    border-radius: 0 0 28px 28px;
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 6px;
+  }
+
+  .home-indicator {
+    width: 110px; height: 4px;
+    background: #888; border-radius: 2px; opacity: 0.55;
+  }
 
   .phone-top {
     background: #fff;
@@ -249,7 +276,7 @@
     <col class="cr">
   </colgroup>
 
-  <!-- Phone header — repeats on every PDF page -->
+  <!-- Phone header — appears once at the very top of the whole table -->
   <thead>
     <tr>
       <td class="ph">{{ phone_header(other_name) }}</td>
@@ -295,6 +322,15 @@
 
   {% endfor %}
   </tbody>
+
+  <!-- Phone footer — appears once at the very bottom of the whole table -->
+  <tfoot>
+    <tr>
+      <td class="pf"><div class="phone-bot"><div class="home-indicator"></div></div></td>
+      <td class="gap-f"></td>
+      <td class="pf"><div class="phone-bot"><div class="home-indicator"></div></div></td>
+    </tr>
+  </tfoot>
 </table>
 
 </body>

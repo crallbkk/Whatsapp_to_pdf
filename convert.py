@@ -114,7 +114,7 @@ def main():
         )
         pdf_format = "A4"
         pdf_landscape = True
-        pdf_margin = {"top": "6mm", "bottom": "16mm", "left": "8mm", "right": "8mm"}
+        pdf_margin = {"top": "6mm", "bottom": "6mm", "left": "8mm", "right": "8mm"}
     else:
         from parser import parse_file, detect_date_format
 
@@ -173,59 +173,13 @@ def main():
             page = browser.new_page()
             page.goto(f"file:///{tmp_path.replace(os.sep, '/')}")
             page.wait_for_load_state("networkidle")
-            pdf_kwargs = dict(
+            page.pdf(
                 path=str(output_path),
                 format=pdf_format,
                 landscape=pdf_landscape,
                 margin=pdf_margin,
                 print_background=True,
             )
-            if args.translations:
-                # Phone-bottom bezel rendered in every page's bottom margin.
-                # Layout matches the table column widths in templates/translated.html
-                # (50% - 10px | 20px gap | 50% - 10px).
-                footer_html = (
-                    '<style>'
-                    '* { box-sizing: border-box; margin: 0; padding: 0; '
-                    '-webkit-print-color-adjust: exact; print-color-adjust: exact; }'
-                    '</style>'
-                    '<div style="width:100%; height:100%; display:flex; '
-                    'background:#d0d0d0; font-size:0; line-height:0;">'
-                    + (
-                        '<div style="flex:1; background:#1a1a1a; '
-                        'padding:0 10px 10px; '
-                        'border-radius:0 0 38px 38px; '
-                        'box-sizing:border-box;">'
-                        '<div style="background:#ECE5DD; '
-                        'border-radius:0 0 28px 28px; '
-                        'height:100%; display:flex; '
-                        'justify-content:center; align-items:flex-end; '
-                        'padding-bottom:6px;">'
-                        '<div style="width:110px; height:4px; '
-                        'background:#888; border-radius:2px;"></div>'
-                        '</div></div>'
-                    ) * 1
-                    + '<div style="width:20px; background:#d0d0d0;"></div>'
-                    + (
-                        '<div style="flex:1; background:#1a1a1a; '
-                        'padding:0 10px 10px; '
-                        'border-radius:0 0 38px 38px; '
-                        'box-sizing:border-box;">'
-                        '<div style="background:#ECE5DD; '
-                        'border-radius:0 0 28px 28px; '
-                        'height:100%; display:flex; '
-                        'justify-content:center; align-items:flex-end; '
-                        'padding-bottom:6px;">'
-                        '<div style="width:110px; height:4px; '
-                        'background:#888; border-radius:2px;"></div>'
-                        '</div></div>'
-                    )
-                    + '</div>'
-                )
-                pdf_kwargs["display_header_footer"] = True
-                pdf_kwargs["header_template"] = "<div></div>"
-                pdf_kwargs["footer_template"] = footer_html
-            page.pdf(**pdf_kwargs)
             browser.close()
     finally:
         os.unlink(tmp_path)
