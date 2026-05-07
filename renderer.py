@@ -114,4 +114,11 @@ def render_translated_html(entries: list, me: str, theme: str = "light",
             e["media_b64"] = None
             e["mime_type"] = None
 
-    return template.render(entries=entries, me=me, theme=theme)
+    # Derive the other person's name from the first non-system, non-me entry
+    other_name = ""
+    for e in entries:
+        if not e.get("is_system") and e.get("sender") and e["sender"] != me:
+            other_name = e["sender"]
+            break
+
+    return template.render(entries=entries, me=me, theme=theme, other_name=other_name)
