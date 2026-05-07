@@ -44,6 +44,40 @@
 
   thead .gap-h { background: #d0d0d0; }
 
+  /* ------------------------------------------------------------------ */
+  /* Phone footer (tfoot) — repeats on every printed page               */
+  /* ------------------------------------------------------------------ */
+  tfoot td {
+    padding: 0;
+    vertical-align: top;
+  }
+
+  tfoot .pf {
+    background: #1a1a1a;
+    padding: 0 10px 10px;
+    border-radius: 0 0 38px 38px;
+  }
+
+  tfoot .gap-f { background: #d0d0d0; }
+
+  .phone-bot {
+    background: #ECE5DD;
+    border-radius: 0 0 28px 28px;
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 6px;
+  }
+
+  .home-indicator {
+    width: 110px;
+    height: 4px;
+    background: #888;
+    border-radius: 2px;
+    opacity: 0.55;
+  }
+
   .phone-top {
     background: #fff;
     border-radius: 28px 28px 0 0;
@@ -257,6 +291,15 @@
       <td class="ph">{{ phone_header(other_name) }}</td>
     </tr>
   </thead>
+
+  <!-- Phone footer — repeats on every PDF page -->
+  <tfoot>
+    <tr>
+      <td class="pf"><div class="phone-bot"><div class="home-indicator"></div></div></td>
+      <td class="gap-f"></td>
+      <td class="pf"><div class="phone-bot"><div class="home-indicator"></div></div></td>
+    </tr>
+  </tfoot>
 
   <tbody>
   {% set ns = namespace(last_date=None) %}
