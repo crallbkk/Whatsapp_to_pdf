@@ -7,10 +7,29 @@
   @page { size: A4 landscape; margin: 6mm 8mm; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  /* The body's gradient paints the phone bezel/screen pattern across the
+     full width. When the table content does not reach the bottom of a
+     page (e.g. a tall message gets pushed to the next page), the empty
+     area still shows the same vertical bezels + cream screen + gap,
+     so it reads as the phone screen continuing — never bare gray.
+     The chat reads as a long phone screenshot: the phone-top is on
+     page 1; the bezel + screen pattern flows continuously across
+     every page break; on the last page the chat simply ends with the
+     gradient continuing to the bottom of the page. */
+  html, body { height: 100%; }
   body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
-    background: #d0d0d0;
+    min-height: 100vh;
+    background: linear-gradient(to right,
+      #1a1a1a 0, #1a1a1a 10px,
+      #ECE5DD 10px, #ECE5DD calc(50% - 20px),
+      #1a1a1a calc(50% - 20px), #1a1a1a calc(50% - 10px),
+      #d0d0d0 calc(50% - 10px), #d0d0d0 calc(50% + 10px),
+      #1a1a1a calc(50% + 10px), #1a1a1a calc(50% + 20px),
+      #ECE5DD calc(50% + 20px), #ECE5DD calc(100% - 10px),
+      #1a1a1a calc(100% - 10px), #1a1a1a 100%
+    );
   }
 
   /* ------------------------------------------------------------------ */
@@ -35,9 +54,9 @@
   /* The 10px black side bezels on tbody cells flow continuously across  */
   /* page breaks, so the result reads as ONE long phone screenshot.      */
   /* ------------------------------------------------------------------ */
-  thead, tfoot { display: table-row-group; }
+  thead { display: table-row-group; }
 
-  thead td, tfoot td {
+  thead td {
     padding: 0;
     vertical-align: top;
   }
@@ -48,28 +67,7 @@
     border-radius: 38px 38px 0 0;
   }
 
-  thead .gap-h, tfoot .gap-f { background: #d0d0d0; }
-
-  tfoot .pf {                         /* phone foot cell */
-    background: #1a1a1a;
-    padding: 0 10px 10px;
-    border-radius: 0 0 38px 38px;
-  }
-
-  .phone-bot {
-    background: #ECE5DD;
-    border-radius: 0 0 28px 28px;
-    height: 26px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    padding-bottom: 6px;
-  }
-
-  .home-indicator {
-    width: 110px; height: 4px;
-    background: #888; border-radius: 2px; opacity: 0.55;
-  }
+  thead .gap-h { background: #d0d0d0; }
 
   .phone-top {
     background: #fff;
@@ -322,15 +320,6 @@
 
   {% endfor %}
   </tbody>
-
-  <!-- Phone footer — appears once at the very bottom of the whole table -->
-  <tfoot>
-    <tr>
-      <td class="pf"><div class="phone-bot"><div class="home-indicator"></div></div></td>
-      <td class="gap-f"></td>
-      <td class="pf"><div class="phone-bot"><div class="home-indicator"></div></div></td>
-    </tr>
-  </tfoot>
 </table>
 
 </body>
